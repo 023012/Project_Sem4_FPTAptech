@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Tuple;
 import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.Calendar;

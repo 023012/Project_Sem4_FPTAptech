@@ -62,7 +62,6 @@ public class BookController {
         }
     }
 
-
     @PostMapping("/books/add")
     public Book createBook(@RequestParam("categoryId") Long categoryId ,@RequestBody Book book) {
         Category categoryFind = categoryRepository.findById(categoryId).get();
