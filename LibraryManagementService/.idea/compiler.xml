@@ -11,11 +11,13 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="LibraryManagementService" target="11" />
+      <module name="Admin" target="1.8" />
+      <module name="Library" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Admin" options="-parameters" />
       <module name="LibraryManagementService" options="-parameters" />
     </option>
   </component>

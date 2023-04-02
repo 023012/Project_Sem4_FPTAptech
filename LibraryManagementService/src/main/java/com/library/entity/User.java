@@ -3,95 +3,71 @@ package com.library.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
+import lombok.NonNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
-@Table(name = "users", 
-    uniqueConstraints = { 
-      @UniqueConstraint(columnNames = "username"),
-      @UniqueConstraint(columnNames = "email") 
-    })
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class User {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
 
-  @NotBlank
-  @Size(max = 20)
-  private String username;
+    private String name;
 
-  @NotBlank
-  @Size(max = 50)
-  @Email
-  private String email;
+    @NonNull
+    @Column(name = "user_name", length = 100)
+    private String username;
 
-  @NotBlank
-  @Size(max = 120)
-  private String password;
+    private String password;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(  name = "user_roles", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private Set<Role> roles = new HashSet<>();
+    @Column(unique = true)
+    private String email;
 
-  public User(String username, String email, String password) {
-    this.username = username;
-    this.email = email;
-    this.password = password;
-  }
+    private String phoneNumber;
 
-//  public User() {
-//  }
-//
-//  public Long getId() {
-//    return id;
-//  }
-//
-//  public void setId(Long id) {
-//    this.id = id;
-//  }
-//
-//  public String getUsername() {
-//    return username;
-//  }
-//
-//  public void setUsername(String username) {
-//    this.username = username;
-//  }
-//
-//  public String getEmail() {
-//    return email;
-//  }
-//
-//  public void setEmail(String email) {
-//    this.email = email;
-//  }
-//
-//  public String getPassword() {
-//    return password;
-//  }
-//
-//  public void setPassword(String password) {
-//    this.password = password;
-//  }
-//
-//  public Set<Role> getRoles() {
-//    return roles;
-//  }
-//
-//  public void setRoles(Set<Role> roles) {
-//    this.roles = roles;
-//  }
+    private String address;
+
+    private String avatar;
+
+    private int virtualWallet;
+
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status;
+
+    public enum AccountStatus{
+        ACTIVE ,
+        CLOSED,
+        CANCELED,
+        BLACKLISTED,
+        NONE
+    }
+
+    public User(String name, @NonNull String username, String password, String email, String phoneNumber, String address, String avatar, int virtualWallet, AccountStatus status, Collection<Role> roles) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.avatar = avatar;
+        this.virtualWallet = virtualWallet;
+        this.status = status;
+        this.roles = roles;
+    }
+
+    /*
+     * FetchType.EAGER: When you load User table from database, it will automatically load Role table as well
+     * FetchType.LAZY : When you load User table from database, it just loads User from DB, you have to call getAllRoles()
+     * from User to get their roles
+     * */
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 }
