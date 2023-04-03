@@ -83,9 +83,9 @@ public class BookController {
 
 //    UpdateBookById
     @PutMapping("/books/save/{id}")
-    public ResponseEntity<Book> updateBook(@RequestParam("categoryId") Long categoryId ,@PathVariable Long id,
+    public ResponseEntity<Book> updateBook(@PathVariable Long id,
                                            @RequestBody Book book) {
-        Category categoryFind = categoryRepository.findById(categoryId).get();
+        Category categoryFind = categoryRepository.findById(book.getCategory_id()).get();
         book.setCategory(categoryFind);
         book = bookService.updateBook(id, book);
         return ResponseEntity.ok(book);
