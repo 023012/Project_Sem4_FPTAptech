@@ -12,4 +12,9 @@ public class HomeController {
         model.addAttribute("title", "Home Page");
         return "index";
     }
+    @RequestMapping("/dasboard")
+    public String dasboard(Model model){
+        model.addAttribute("title", "Das board");
+        return "admin/index";
+    }
 }
