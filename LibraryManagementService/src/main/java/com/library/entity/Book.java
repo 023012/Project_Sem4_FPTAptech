@@ -30,7 +30,7 @@ public class Book {
     private int amount;
     private int price;
     private int borrowPrice;
-    private long category_id;
+//    private long category_id;
 
     @Enumerated(EnumType.STRING)
     private BookStatus status;
@@ -39,11 +39,20 @@ public class Book {
     private Date updatedAt;
     private Date publishedAt;
 
+//    @ManyToOne(
+//            //cascade = CascadeType.
+//    )
+//    @JoinColumn(
+//            name = "category_id", insertable = false, updatable = false
+//    )
+//    private Category category;
+
     @ManyToOne(
             //cascade = CascadeType.
     )
     @JoinColumn(
-            name = "category_id", insertable = false, updatable = false
+            name = "category_id",
+            referencedColumnName = "categoryId"
     )
     private Category category;
     public enum BookStatus{

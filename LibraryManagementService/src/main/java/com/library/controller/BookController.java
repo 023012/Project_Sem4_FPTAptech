@@ -23,69 +23,69 @@ public class BookController {
     private final BookService bookService;
     private final CategoryRepository categoryRepository;
 
-//    GetAllBooks
+    //    GetAllBooks
     @GetMapping("/books")
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
-//    SearchBookByKeyword
+    //    SearchBookByKeyword
     @GetMapping("/books/search")
     public List<Book> getAllBooksByKeyword(@RequestParam("keyword") String keyword) {
         return bookService.getAllBookByKeyword(keyword);
     }
 
-//    GetBookById
+    //    GetBookById
     @GetMapping("/book/{id}")
-    public ResponseEntity<?> getBookByID(@PathVariable Long id){
-        if(bookRepository.findById(id) == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book with id "+id+" is not existed !");
-        }else {
+    public ResponseEntity<?> getBookByID(@PathVariable Long id) {
+        if (bookRepository.findById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book with id " + id + " is not existed !");
+        } else {
             return ResponseEntity.ok().body(bookRepository.findById(id));
         }
     }
 
-//    GetBookByCategory
+    //    GetBookByCategory
     @GetMapping("/books/category/{cateId}")
-    public ResponseEntity<?> getBookByCateID(@PathVariable Long cateId){
-        if(bookService.getAllBookByCategoryID(cateId) == null){
+    public ResponseEntity<?> getBookByCateID(@PathVariable Long cateId) {
+        if (bookService.getAllBookByCategoryID(cateId) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("List books is empty!");
-        }else{
+        } else {
             return ResponseEntity.ok().body(bookService.getAllBookByCategoryID(cateId));
         }
     }
 
-//    SearchBookByCategoryIdOrKeyword
+    //    SearchBookByCategoryIdOrKeyword
     @GetMapping("/books/cateID-search")
     public ResponseEntity<?> getBookByCateIDAndKeyword(@RequestParam("cateID") Long cateID,
-                                                       @RequestParam("keyword") String keyword){
-        if(bookService.getAllBookByCateIDAndKeyword(cateID, keyword) == null){
+                                                       @RequestParam("keyword") String keyword) {
+        if (bookService.getAllBookByCateIDAndKeyword(cateID, keyword) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("List books is empty!");
-        }else{
+        } else {
             return ResponseEntity.ok().body(bookService.getAllBookByCateIDAndKeyword(cateID, keyword));
         }
     }
 
-//    SaveBook
+    //    SaveBook
     @PostMapping("/books/add")
-    public Book createBook( @RequestBody Book book) {
-        Category categoryFind = categoryRepository.findById(book.getCategory_id()).get();
+    public Book createBook(@RequestParam("categoryId") Long categoryId, @RequestBody Book book) {
+        Category categoryFind = categoryRepository.findById(categoryId).get();
         book.setCategory(categoryFind);
         System.out.println(book);
         return bookService.createBook(book);
     }
 
-//    RemoveBookById
+    //    RemoveBookById
     @DeleteMapping("/books/delete/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable Long id) {
         return ResponseEntity.ok(bookService.deleteBook(id));
     }
 
-//    UpdateBookById
+    //    UpdateBookById
     @PutMapping("/books/save/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id,
+    public ResponseEntity<Book> updateBook(@RequestParam("categoryId") Long categoryId, @PathVariable Long id,
                                            @RequestBody Book book) {
-        Category categoryFind = categoryRepository.findById(book.getCategory_id()).get();
+        Category categoryFind = categoryRepository.findById(categoryId).get();
         book.setCategory(categoryFind);
         book = bookService.updateBook(id, book);
         return ResponseEntity.ok(book);
