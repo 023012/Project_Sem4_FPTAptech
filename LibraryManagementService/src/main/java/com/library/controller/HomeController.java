@@ -33,7 +33,7 @@ public class HomeController {
         List<Book> books = bookRepository.findAll();
         model.addAttribute("title", "Library");
         model.addAttribute("books", books);
-        return "client/library";
+        return "client/shop";
     }
 
     @GetMapping("/book-details/{id}")
