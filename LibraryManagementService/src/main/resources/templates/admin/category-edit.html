@@ -368,32 +368,36 @@
 
                 <div class="row">
 
-                    <div th:if="${size == 0}">
-                        <p>No category</p>
+                    <!--Change Name category Modal-->
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+                         aria-labelledby="editModalExample"
+                         aria-hidden="true">
+                        <form th:action="@{/update-category}" method="put">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Edit Category</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="idEdit" class="col-form-label">Id:</label>
+                                            <input type="text" class="form-control" id="idEdit" name="id" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nameEdit" class="col-form-label">Name:</label>
+                                            <input type="text" class="form-control" id="nameEdit" name="name">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <a type="button" class="btn btn-primary" th:href="@{/category/new}">
-                        Add new category
-                    </a>
 
-                    <table class="table table-hover align-middle mb-0 bg-white" th:if="${size > 0}">
-                        <thead class="bg-light">
-                        <tr>
-                            <th scope="col">Category index</th>
-                            <th scope="col">Category name</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="category : ${categories}">
-                            <th scope="row" th:text="${category.categoryId}"></th>
-                            <td th:text="${category.name}"></td>
-                            <td>
-                                <a th:href="@{/}">Edit</a>
-                                <a th:href="@{/}">Delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
 
             </div>

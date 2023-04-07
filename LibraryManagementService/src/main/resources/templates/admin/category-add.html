@@ -366,34 +366,34 @@
                 <!-- Page Heading -->
                 <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
 
+                <div th:if="${success}" class="text-center alert alert-success">
+                    <p th:text="${success}"></p>
+                </div>
+                <div th:if="${failed}" class="text-center alert alert-danger">
+                    <p th:text="${failed}"></p>
+                </div>
+
                 <div class="row">
+                    <!-- Add Modal: Add new category -->
+                    <form th:action="@{/category/add}" method="post" th:object="${category}">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
 
-                    <div th:if="${size == 0}">
-                        <p>No category</p>
-                    </div>
-                    <a type="button" class="btn btn-primary" th:href="@{/category/new}">
-                        Add new category
-                    </a>
-
-                    <table class="table table-hover align-middle mb-0 bg-white" th:if="${size > 0}">
-                        <thead class="bg-light">
-                        <tr>
-                            <th scope="col">Category index</th>
-                            <th scope="col">Category name</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="category : ${categories}">
-                            <th scope="row" th:text="${category.categoryId}"></th>
-                            <td th:text="${category.name}"></td>
-                            <td>
-                                <a th:href="@{/}">Edit</a>
-                                <a th:href="@{/}">Delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Name:</label>
+                                        <input type="text" class="form-control" th:field="*{name}"
+                                               id="recipient-name">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
             </div>

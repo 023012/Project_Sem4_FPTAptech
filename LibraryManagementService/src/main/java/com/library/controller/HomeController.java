@@ -62,7 +62,9 @@ public class HomeController {
     @GetMapping("/categories")
     public String category(Model model){
         List<Category> categories = categoryRepository.findAll();
-        model.addAttribute("categories",categories);
+        model.addAttribute("categories", categories);
+        model.addAttribute("size", categories.size());
+        model.addAttribute("title", "Categories");
         return "admin/category";
     }
 }
