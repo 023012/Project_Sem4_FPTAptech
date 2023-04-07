@@ -9,12 +9,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
-@RestController
+@Controller
+//@RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class BookController {
@@ -22,6 +25,8 @@ public class BookController {
 
     private final BookService bookService;
     private final CategoryRepository categoryRepository;
+
+//    Admin Backend
 
     //    GetAllBooks
     @GetMapping("/books")
@@ -89,5 +94,16 @@ public class BookController {
         book.setCategory(categoryFind);
         book = bookService.updateBook(id, book);
         return ResponseEntity.ok(book);
+    }
+
+//    Book Controller Client
+
+    @GetMapping("/book-details/{id}")
+    public String bookDetails(@PathVariable("id") Long id, Model model) {
+        Book book = bookRepository.getById(id);
+//        Long categoryId = book.getCategory().getCategoryId();
+        model.addAttribute("title", "Single Book");
+        model.addAttribute("book", book);
+        return "client/single-product";
     }
 }

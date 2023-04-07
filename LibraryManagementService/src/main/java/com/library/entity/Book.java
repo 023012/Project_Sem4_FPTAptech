@@ -62,4 +62,12 @@ public class Book {
         UPDATING,
         HOT
     }
+
+    /* Status:
+    * HẾT HÀNG,
+         CÓ SẴN,
+         KHÔNG CÓ SẴN,
+         CẬP NHẬT,
+         NÓNG
+    * */
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Book Store</title>
+	<title th:text="${title}"></title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,7 +82,7 @@
 
 					<div class="col-md-2">
 						<div class="main-logo">
-							<a href="index.html"><img src="/client/images/main-logo.png" alt="logo"></a>
+							<a th:href="@{/}"><img src="../client/images/main-logo.png" alt="logo"></a>
 						</div>
 
 					</div>
@@ -92,18 +92,19 @@
 						<nav id="navbar">
 							<div class="main-menu stellarnav">
 								<ul class="menu-list">
-									<li class="menu-item active"><a href="#home" data-effect="Home">Home</a></li>
-									<li class="menu-item"><a href="#about" class="nav-link"
-											data-effect="About">About</a></li>
+									<li class="menu-item active"><a th:href="@{/}" data-effect="Home">Home</a>
+									</li>
+									<li class="menu-item"><a th:href="@{/about}" class="nav-link"
+															 data-effect="About">About</a></li>
 									<li class="menu-item has-sub">
 
 									</li>
-									<li class="menu-item"><a href="#popular-books" class="nav-link"
-											data-effect="Shop">Shop</a></li>
-									<li class="menu-item"><a href="#latest-blog" class="nav-link"
-											data-effect="Articles">Articles</a></li>
-									<li class="menu-item"><a href="#contact" class="nav-link"
-											data-effect="Contact">Contact</a></li>
+									<li class="menu-item"><a th:href="@{/books}" class="nav-link"
+															 data-effect="Books">Books</a></li>
+									<li class="menu-item"><a th:href="@{/articles}" class="nav-link"
+															 data-effect="Articles">Articles</a></li>
+									<li class="menu-item"><a th:href="@{/contact-us}" class="nav-link"
+															 data-effect="Contact">Contact Us</a></li>
 								</ul>
 
 								<div class="hamburger">
@@ -123,6 +124,22 @@
 
 	</div><!--header-wrap-->
 
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="colored">
+						<h1 class="page-title">Books</h1>
+						<div class="breadcum-items">
+							<span class="item"><a th:href="@{/books}">Books /</a></span>
+							<span class="item colored"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!--site-banner-->
+
 	<section class="bg-sand padding-large">
 		<div class="container">
 			<div class="row">
@@ -133,27 +150,103 @@
 
 				<div class="col-md-6 pl-5">
 					<div class="product-detail">
-						<h1>Birds Gonna Be Happy</h1>
-						<p>Fiction</p>
-						<span class="price colored">$45.00</span>
+						<h1 th:text="${book.title}"></h1>
+						<p th:text="${book.subject}"></p>
+						<p th:text="${book.author}"></p>
+						<p th:text="${book.detail}"></p>
 
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-							consequat.
-						</p>
-						<p>
-							Duis aute irure dolor in reprehenderit in voluptate velit esse
-							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</p>
-
+						<div class="item-price">
+							<span class="prev-price" th:text="${book.price} + '₫/Day'"></span>
+							<span th:text="${book.borrowPrice} + '₫/Day'"></span>
+						</div>
 						<button type="submit" name="add-to-cart" value="27545" class="button">Add to cart</button>
 
 					</div>
 				</div>
 
+			</div>
+		</div>
+	</section>
+
+	<section id="special-offer" class="bookshelf">
+
+		<div class="section-header align-center">
+			<div class="title">
+				<span>Grab your opportunity</span>
+			</div>
+			<h2 class="section-title">Books with offer</h2>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="inner-content">
+					<div class="product-list" data-aos="fade-up">
+						<div class="grid product-grid">
+							<figure class="product-style">
+								<img src="../client/images/product-item5.jpg" alt="Books" class="product-item">
+								<button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
+										href="single-product.html">Add to Cart</a></button>
+								<figcaption>
+									<h3>Simple way of piece life</h3>
+									<p>Armor Ramsey</p>
+									<div class="item-price">
+										<span class="prev-price">$ 50.00/Day</span>$ 40.00/Day
+									</div>
+								</figcaption>
+							</figure>
+
+							<figure class="product-style">
+								<img src="../client/images/product-item6.jpg" alt="Books" class="product-item">
+								<button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
+										href="single-product.html">Add to Cart</a></button>
+								<figcaption>
+									<h3>Great travel at desert</h3>
+									<p>Sanchit Howdy</p>
+									<div class="item-price">
+										<span class="prev-price">$ 30.00/Day</span>$ 38.00/Day
+									</div>
+								</figcaption>
+							</figure>
+
+							<figure class="product-style">
+								<img src="../client/images/product-item7.jpg" alt="Books" class="product-item">
+								<button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
+										href="single-product.html">Add to Cart</a></button>
+								<figcaption>
+									<h3>The lady beauty Scarlett</h3>
+									<p>Arthur Doyle</p>
+									<div class="item-price">
+										<span class="prev-price">$ 35.00/Day</span>$ 45.00/Day
+									</div>
+								</figcaption>
+							</figure>
+
+							<figure class="product-style">
+								<img src="../client/images/product-item8.jpg" alt="Books" class="product-item">
+								<button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
+										href="single-product.html">Add to Cart</a></button>
+								<figcaption>
+									<h3>Once upon a time</h3>
+									<p>Klien Marry</p>
+									<div class="item-price">
+										<span class="prev-price">$ 25.00/Day</span>$ 35.00/Day
+									</div>
+								</figcaption>
+							</figure>
+
+							<figure class="product-style">
+								<img src="../client/images/product-item2.jpg" alt="Books" class="product-item">
+								<button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
+										href="single-product.html">Add to Cart</a></button>
+								<figcaption>
+									<h3>Simple way of piece life</h3>
+									<p>Armor Ramsey</p>
+									<div class="item-price">$ 40.00/Day</div>
+								</figcaption>
+							</figure>
+						</div><!--grid-->
+					</div>
+				</div><!--inner-content-->
 			</div>
 		</div>
 	</section>
