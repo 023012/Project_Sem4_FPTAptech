@@ -2,8 +2,10 @@ package com.library.controller;
 
 import com.library.entity.Book;
 import com.library.entity.Category;
+import com.library.entity.User;
 import com.library.repository.BookRepository;
 import com.library.repository.CategoryRepository;
+import com.library.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class HomeController {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
     //    Client User
     @RequestMapping("/")
@@ -67,4 +70,5 @@ public class HomeController {
         model.addAttribute("title", "Categories");
         return "admin/category";
     }
+
 }
