@@ -88,7 +88,7 @@ public class CategoryController {
         return "admin/category-edit";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/categories/edit/{id}")
     public String updateCategory(@PathVariable("id") long id, @Valid Category category,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
