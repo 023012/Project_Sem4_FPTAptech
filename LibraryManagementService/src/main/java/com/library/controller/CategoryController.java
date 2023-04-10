@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @EnableScheduling
@@ -42,9 +43,17 @@ public class CategoryController {
         }
     }
 
-    @DeleteMapping("/categories/delete/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
-        return ResponseEntity.ok(categoryService.deleteCategory(id));
+//    @DeleteMapping("/categories/delete/{id}")
+//    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
+//        return ResponseEntity.ok(categoryService.deleteCategory(id));
+//    }
+
+    @GetMapping("/categories/delete/{id}")
+    public String deleteCategory(@PathVariable("id") long id, Model model) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + id));
+        categoryRepository.delete(category);
+        return "redirect:/categories";
     }
 
     //    Backend admin
@@ -65,6 +74,29 @@ public class CategoryController {
             return "redirect:/category/new";
         }
         categoryService.createCategory(category);
+        return "redirect:/categories";
+    }
+
+
+
+    @GetMapping("/categories/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Category Id:" + id));
+
+        model.addAttribute("category", category);
+        return "admin/category-edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateCategory(@PathVariable("id") long id, @Valid Category category,
+                             BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            category.setCategoryId(id);
+            return "admin/category-edit";
+        }
+
+        categoryRepository.save(category);
         return "redirect:/categories";
     }
 
