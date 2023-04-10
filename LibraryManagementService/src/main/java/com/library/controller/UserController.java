@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.library.entity.Category;
 import com.library.entity.Role;
 import com.library.entity.User;
 import com.library.model.PasswordModel;
@@ -18,7 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.MimeTypeUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -31,18 +36,26 @@ import java.util.stream.Collectors;
 
 @EnableScheduling
 @Slf4j
-@RestController
-@RequestMapping("/api")
+@Controller
+@RequestMapping("")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
 
 //    GetAllUsers
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers(){
-        return ResponseEntity.ok().body(userService.getUsers());
-    }
+//    @GetMapping("/users")
+//    public ResponseEntity<List<User>> getUsers(){
+//        return ResponseEntity.ok().body(userService.getUsers());
+//    }
+    @GetMapping("users")
+    public String user(Model model){
+        List<User> users = userRepository.findAll();
+        model.addAttribute("users",users);
+        model.addAttribute("size",users.size());
+        model.addAttribute("title","Users");
+        return "admin/users/user";
+}
 
 //    GetUserByUsername
     @GetMapping("/user/username/{username}")
@@ -74,6 +87,28 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/user/new")
+    public String addForm(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        model.addAttribute("title", "Add new user");
+        return "admin/users/user-add";
+    }
+    @PostMapping("user/add")
+    public String addUser(@Validated @ModelAttribute("user")
+                              User user, BindingResult result,Model model){
+        User existedUser = userService.findUserByEmail(user.getEmail());
+        if (existedUser != null){
+            log.info("Cannot create this account.\n\tEmail has existed!");
+            ResponseEntity.badRequest().body("Cannot create this account.\n\tEmail has existed!");
+
+        }else{
+            URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/add").toUriString());
+             ResponseEntity.created(uri).body(userService.saveUser(user));
+        }
+
+        return "redirect:/users";
+    }
 //    SaveUser
     @PostMapping("/user/save")
     public ResponseEntity<?> saveUser(@RequestBody User user) {
@@ -166,6 +201,14 @@ public class UserController {
         }
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") long id, Model model) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        userRepository.delete(user);
+        return "redirect:/users";
+    }
+
 //    UpdateUser
     @PutMapping("/user/update")
     public ResponseEntity<?> updateUserByAdmin(@RequestParam("userId") Long userId ,
@@ -219,6 +262,7 @@ public class UserController {
         return ResponseEntity.ok().body("");
     }
 
+
 //    UpdateVirtualWallet
     @PutMapping("/user/update-money")
     public ResponseEntity<?> updateMoneyUserByAdmin(@RequestParam("userId") Long userId ,
@@ -247,6 +291,7 @@ public class UserController {
         return url;
     }
 
+
     private String applicationUrl(HttpServletRequest request) {
         return "http://" + // http://locallhost:4200
                 request.getServerName() +
@@ -259,4 +304,6 @@ public class UserController {
     private String applicationUrlClient(String request) {
         return request;
     }
+
+
 }

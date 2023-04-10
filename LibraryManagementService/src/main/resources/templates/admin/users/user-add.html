@@ -12,13 +12,13 @@
     <title th:text="${title}"></title>
 
     <!-- Custom fonts for this template-->
-    <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../admin/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -31,7 +31,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/admin}">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/dashboard}">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
@@ -43,7 +43,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin}">
+            <a class="nav-link" href="index.html">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -67,8 +67,8 @@
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Components:</h6>
-                    <a class="collapse-item" th:href="@{/admin/categories}">Category</a>
-                    <a class="collapse-item" th:href="@{/admin/books}">Books</a>
+                    <a class="collapse-item" th:href="@{/users}">Users</a>
+                    <a class="collapse-item" th:href="@{/categories}">Category</a>
                 </div>
             </div>
         </li>
@@ -366,46 +366,97 @@
                 <!-- Page Heading -->
                 <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
 
+                <div th:if="${success}" class="text-center alert alert-success">
+                    <p th:text="${success}"></p>
+                </div>
+                <div th:if="${failed}" class="text-center alert alert-danger">
+                    <p th:text="${failed}"></p>
+                </div>
+
                 <div class="row">
+                    <!-- Add Modal: Add new category -->
+                    <form th:action="@{/user/add}" method="post" th:object="${user}">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
 
-                    <!--Change Name category Modal-->
-                    <form th:action="@{/categories/edit/{id} (id=${category.categoryId})}"
-                          th:object="${category}" method="post">
+                                    <div class="form-group">
+                                        <label for="recipient-uname" class="col-form-label">User name:</label>
+                                        <input type="text" class="form-control" th:field="*{username}"
+                                               id="recipient-uname" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Name:</label>
+                                        <input type="text" class="form-control" th:field="*{name}"
+                                               id="recipient-name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-email" class="col-form-label">Email:</label>
+                                        <input type="email" class="form-control" th:field="*{email}"
+                                               id="recipient-email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-address" class="col-form-label">Address:</label>
+                                        <input type="text" class="form-control" th:field="*{address}"
+                                               id="recipient-address" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-ps" class="col-form-label">Password:</label>
+                                        <input type="password" class="form-control" th:field="*{password}"
+                                               id="recipient-ps" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-pn" class="col-form-label">Phone number:</label>
+                                        <input type="text" class="form-control" th:field="*{phoneNumber}"
+                                               id="recipient-pn" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-status" class="col-form-label">Status:</label>
+                                        <select th:field="*{status}" id="recipient-status" class="form-control" name="status">
+                                            <option th:each="status : ${T(com.library.entity.User.AccountStatus).values()}"
+                                                    th:value="${status}" th:text="${status}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-avatar" class="col-form-label">Avatar:</label>
+                                        <input type="file" class="form-control" th:field="*{avatar}"
+                                               id="recipient-avatar">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-vw" class="col-form-label">Virtual Wallet:</label>
+                                        <input type="text" class="form-control" th:field="*{virtualWallet}"
+                                               id="recipient-vw">
+                                    </div>
 
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="form5Example1">Name</label>
-                            <input type="text" id="form5Example1" class="form-control" th:field="*{name}"
-                             placeholder="Name"/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
                         </div>
-                        
-
-                        <button type="button" th:href="@{/admin/category}" class="btn btn-secondary" data-dismiss="modal">Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-
                     </form>
                 </div>
 
             </div>
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- /.container-fluid -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
     </div>
-    <!-- End of Main Content -->
-
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website 2020</span>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
-
-</div>
-<!-- End of Content Wrapper -->
+    <!-- End of Content Wrapper -->
 
 </div>
 <!-- End of Page Wrapper -->
@@ -436,14 +487,14 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="/admin/vendor/jquery/jquery.min.js"></script>
-<script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../admin/vendor/jquery/jquery.min.js"></script>
+<script src="../admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="../admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="/admin/js/sb-admin-2.min.js"></script>
+<script src="../admin/js/sb-admin-2.min.js"></script>
 
 </body>
 
