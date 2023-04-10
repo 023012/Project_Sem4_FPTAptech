@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
 
@@ -9,16 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title th:text="${title}"></title>
+    <title>SB Admin 2 - Cards</title>
 
     <!-- Custom fonts for this template-->
-    <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../admin/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -31,7 +31,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/admin}">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
@@ -43,7 +43,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin}">
+            <a class="nav-link" href="index.html">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -67,8 +67,8 @@
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Components:</h6>
-                    <a class="collapse-item" th:href="@{/admin/categories}">Category</a>
-                    <a class="collapse-item" th:href="@{/admin/books}">Books</a>
+                    <a class="collapse-item" href="user.html">User</a>
+                    <a class="collapse-item active" href="category.html">Category</a>
                 </div>
             </div>
         </li>
@@ -274,8 +274,7 @@
                                 </div>
                                 <div class="font-weight-bold">
                                     <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                        problem I've been having.
-                                    </div>
+                                        problem I've been having.</div>
                                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                                 </div>
                             </a>
@@ -287,8 +286,7 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?
-                                    </div>
+                                        would you like them sent to you?</div>
                                     <div class="small text-gray-500">Jae Chun · 1d</div>
                                 </div>
                             </a>
@@ -300,8 +298,7 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!
-                                    </div>
+                                        the progress so far, keep up the good work!</div>
                                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                                 </div>
                             </a>
@@ -313,8 +310,7 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...
-                                    </div>
+                                        told me that people say this to all dogs, even if they aren't good...</div>
                                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                 </div>
                             </a>
@@ -368,44 +364,71 @@
 
                 <div class="row">
 
-                    <!--Change Name category Modal-->
-                    <form th:action="@{/categories/edit/{id} (id=${category.categoryId})}"
-                          th:object="${category}" method="post">
+                    <div th:if="${size == 0}">
+                        <p>No category</p>
+                    </div>
+                    <a type="button" class="btn btn-primary" th:href="@{/user/new}">
+                        Add new user
+                    </a>
 
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="form5Example1">Name</label>
-                            <input type="text" id="form5Example1" class="form-control" th:field="*{name}"
-                             placeholder="Name"/>
-                        </div>
-                        
-
-                        <button type="button" th:href="@{/admin/category}" class="btn btn-secondary" data-dismiss="modal">Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-
-                    </form>
+                    <table class="table table-hover align-middle mb-0 bg-white" th:if="${size > 0}">
+                        <thead class="bg-light">
+                        <tr>
+                            <th scope="col">User index</th>
+                            <th scope="col">User name</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Address</th>
+<!--                            <th scope="col">Password</th>-->
+                            <th scope="col">Phone number</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Avatar</th>
+                            <th scope="col">Virtual wallet</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <th scope="row" th:text="${user.id}"></th>
+                            <td th:text="${user.username}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.address}"></td>
+<!--                            <td th:text="${user.password}"></td>-->
+                            <td th:text="${user.phoneNumber}"></td>
+                            <td th:text="${user.status}"></td>
+                            <td>
+                                <img th:src="${user.avatar}">
+                            </td>
+                            <td th:text="${user.virtualWallet}"></td>
+                            <td>
+                                <a class="btn btn-success" th:href="@{/}">Edit</a>
+                                <a class="btn btn-danger" th:href="@{/delete/{id}(id=${user.id})}">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
 
+
             </div>
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- /.container-fluid -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
     </div>
-    <!-- End of Main Content -->
-
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website 2020</span>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
-
-</div>
-<!-- End of Content Wrapper -->
+    <!-- End of Content Wrapper -->
 
 </div>
 <!-- End of Page Wrapper -->
@@ -436,14 +459,14 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="/admin/vendor/jquery/jquery.min.js"></script>
-<script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../admin/vendor/jquery/jquery.min.js"></script>
+<script src="../admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="../admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="/admin/js/sb-admin-2.min.js"></script>
+<script src="../admin/js/sb-admin-2.min.js"></script>
 
 </body>
 

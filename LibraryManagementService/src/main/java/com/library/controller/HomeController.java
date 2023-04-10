@@ -2,9 +2,13 @@ package com.library.controller;
 
 import com.library.entity.Book;
 import com.library.entity.Category;
+import com.library.entity.User;
 import com.library.repository.BookRepository;
 import com.library.repository.CategoryRepository;
+
 import com.library.service.BookService;
+import com.library.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +25,7 @@ import java.util.Optional;
 public class HomeController {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
     //    Client User
     @RequestMapping("/")
@@ -69,6 +74,7 @@ public class HomeController {
         return "admin/category";
     }
 
+
     @GetMapping("/admin/books")
     public String book(Model model){
         List<Book> books = bookRepository.findAll();
@@ -77,4 +83,5 @@ public class HomeController {
         model.addAttribute("title", "Books");
         return "admin/book";
     }
+
 }
