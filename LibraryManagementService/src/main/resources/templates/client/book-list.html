@@ -497,7 +497,7 @@
 					<div class="products-grid grid" id="products-grid">
 
 						<figure class="product-style" th:each="book : ${books}">
-							<a th:href="@{/api/book-details/{id}(id = ${book.id})}">
+							<a th:href="@{/books/book-details/{id}(id = ${book.id})}">
 								<img src="/client/images/tab-item1.jpg" alt="Books" class="product-item">
 							</a>
 							<figcaption>

@@ -1,14 +1,18 @@
 package com.library.service.impl;
 
 import com.library.entity.Book;
+import com.library.repository.AttachmentRepository;
 import com.library.repository.BookRepository;
+import com.library.service.AttachmentService;
 import com.library.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Tuple;
 import javax.swing.text.html.parser.Entity;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -16,16 +20,21 @@ import java.util.List;
 @Service
 @Slf4j
 public class BookServiceImpl implements BookService {
+    private final AttachmentRepository attachmentRepository;
     private BookRepository bookRepository;
+
+    private AttachmentService attachmentService;
 
     private EntityManagerFactory emf;
     private Long cateID;
     private String keyword;
 
-    public BookServiceImpl(BookRepository bookRepository , EntityManagerFactory emf){
+    public BookServiceImpl(BookRepository bookRepository , EntityManagerFactory emf,
+                           AttachmentRepository attachmentRepository){
         this.bookRepository = bookRepository;
         this.emf = emf;
 
+        this.attachmentRepository = attachmentRepository;
     }
 
     @Override

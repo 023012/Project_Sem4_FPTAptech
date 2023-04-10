@@ -5,7 +5,10 @@ import com.library.entity.Category;
 import com.library.entity.User;
 import com.library.repository.BookRepository;
 import com.library.repository.CategoryRepository;
+
+import com.library.service.BookService;
 import com.library.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,19 +59,29 @@ public class HomeController {
 
 
 //    Backend Admin
-    @RequestMapping("/dashboard")
+    @RequestMapping("/admin")
     public String dashboard(Model model){
         model.addAttribute("title", "Das board");
         return "admin/index";
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/admin/categories")
     public String category(Model model){
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
         model.addAttribute("size", categories.size());
         model.addAttribute("title", "Categories");
         return "admin/category";
+    }
+
+
+    @GetMapping("/admin/books")
+    public String book(Model model){
+        List<Book> books = bookRepository.findAll();
+        model.addAttribute("books", books);
+        model.addAttribute("size", books.size());
+        model.addAttribute("title", "Books");
+        return "admin/book";
     }
 
 }
