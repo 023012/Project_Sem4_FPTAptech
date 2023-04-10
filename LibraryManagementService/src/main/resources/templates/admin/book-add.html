@@ -12,13 +12,13 @@
     <title th:text="${title}"></title>
 
     <!-- Custom fonts for this template-->
-    <link href="../admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link th:href="@{/admin/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="../admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
 
 </head>
 
@@ -374,25 +374,126 @@
                 </div>
 
                 <div class="row">
-                    <!-- Add Modal: Add new category -->
-                    <form th:action="@{/category/add}" method="post" th:object="${category}">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Name:</label>
-                                        <input type="text" class="form-control" th:field="*{name}"
-                                               id="recipient-name">
-                                    </div>
+                    <!-- Add Modal: Add new book -->
+                    <form th:action="@{/admin/books/add}" method="post" th:object="${book}" enctype="multipart/form-data">
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="form-outline">
+                                    <label class="form-label" for="form6Example1">Title</label>
+                                    <input type="text" id="form6Example1" class="form-control" th:field="*{title}"/>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                            <div class="col">
+                                <div class="form-outline">
+                                    <label class="form-label" for="form6Example2">Author</label>
+                                    <input type="text" id="form6Example2" class="form-control" th:field="*{author}"/>
+                                </div>
+                            </div>
+                            <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+                        </div>
+
+                        <!-- Text input -->
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="form-outline">
+                                    <label class="form-label" for="formPublisher">Publisher</label>
+                                    <input type="text" id="formPublisher" class="form-control" th:field="*{publisher}"/>
+                                </div>
+                            </div>
+                            <span th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></span>
+                            <div class="col">
+                                <div class="form-outline">
+                                    <label class="form-label" for="formPublishedAt">Published At</label>
+                                    <input type="date" id="formPublishedAt" class="form-control"
+                                           th:field="*{publishedAt}"/>
+                                </div>
+                            </div>
+                            <span th:if="${#fields.hasErrors('publishedAt')}" th:errors="*{publishedAt}"></span>
+                        </div>
+
+                        <!-- Text input -->
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="form-outline">
+                                    <label class="form-label" for="formLanguage">Language</label>
+                                    <input type="text" id="formLanguage" class="form-control" th:field="*{language}"/>
+                                </div>
+                            </div>
+                            <span th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></span>
+                            <div class="col">
+                                <div class="form-outline">
+                                    <label class="form-label" for="formAmount">Amount</label>
+                                    <input type="number" id="formAmount" class="form-control" th:field="*{amount}"/>
+                                </div>
+                            </div>
+                            <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
+                        </div>
+
+                        <!-- Number input -->
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="form-outline">
+                                    <label class="form-label" for="formPrice">Price</label>
+                                    <input type="text" id="formPrice" class="form-control" th:field="*{price}"/>
+                                </div>
+                            </div>
+                            <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                            <div class="col">
+                                <div class="form-outline">
+                                    <label class="form-label" for="formBorrowPrice">Borrow Price</label>
+                                    <input type="text" id="formBorrowPrice" class="form-control"
+                                           th:field="*{borrowPrice}"/>
+                                </div>
+                            </div>
+                            <span th:if="${#fields.hasErrors('borrowPrice')}" th:errors="*{borrowPrice}"></span>
+                        </div>
+
+
+                        <div class="row mb-4">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="categories">Category</label>
+                                <div class="col-md-4">
+                                    <select id="categories" th:field="*{category}" name="categories"
+                                            class="form-control" style="width:200px;">
+                                        <option th:value="null">-SELECT-</option>
+                                        <option th:each="category : ${categories}"
+                                                th:value="${category.categoryId}"
+                                                th:text="${category.name}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-status" class="col-md-4 control-label">Status</label>
+                                <div class="col-md-4">
+                                    <select th:field="*{status}" id="recipient-status" class="form-control"
+                                            style="width:200px;">
+                                        <option th:value="null">-SELECT-</option>
+                                        <option th:each="status : ${T(com.library.entity.Book.BookStatus).values()}"
+                                                th:value="${status}"
+                                                th:text="${status.name()}"></option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="recipient-avatar" class="col-form-label">Avatar:</label>
+                            <input type="file" class="form-control" th:field="*{thumbnail}"
+                                   id="recipient-avatar">
+                        </div>
+                        <span th:if="${#fields.hasErrors('thumbnail')}" th:errors="*{thumbnail}"></span>
+
+
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="formBookDetail">Book Detail</label>
+                            <textarea class="form-control" id="formBookDetail" rows="4" th:text="*{detail}"></textarea>
+                        </div>
+                        <span th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}"></span>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Save</button>
                     </form>
                 </div>
 
@@ -444,14 +545,14 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="../admin/vendor/jquery/jquery.min.js"></script>
-<script src="../admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/admin/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="../admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script th:src="@{/admin/vendor/jquery-easing/jquery.easing.min.js}"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="../admin/js/sb-admin-2.min.js"></script>
+<script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
 
 </body>
 

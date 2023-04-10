@@ -9,16 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title th:text="${title}"></title>
+    <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="../admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link th:href="@{/admin/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="../admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
 
 </head>
 
@@ -274,8 +274,7 @@
                                 </div>
                                 <div class="font-weight-bold">
                                     <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                        problem I've been having.
-                                    </div>
+                                        problem I've been having.</div>
                                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                                 </div>
                             </a>
@@ -287,8 +286,7 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?
-                                    </div>
+                                        would you like them sent to you?</div>
                                     <div class="small text-gray-500">Jae Chun · 1d</div>
                                 </div>
                             </a>
@@ -300,8 +298,7 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!
-                                    </div>
+                                        the progress so far, keep up the good work!</div>
                                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                                 </div>
                             </a>
@@ -313,8 +310,7 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...
-                                    </div>
+                                        told me that people say this to all dogs, even if they aren't good...</div>
                                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                 </div>
                             </a>
@@ -366,38 +362,31 @@
                 <!-- Page Heading -->
                 <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
 
-                <div th:if="${success}" class="text-center alert alert-success">
-                    <p th:text="${success}"></p>
-                </div>
-                <div th:if="${failed}" class="text-center alert alert-danger">
-                    <p th:text="${failed}"></p>
-                </div>
-
                 <div class="row">
-                    <!-- Add Modal: Add new category -->
-                    <form th:action="@{/category/add}" method="post" th:object="${category}">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
+                    <div class="col col-4">
+                        <figure>
+                            <img th:text="${book.thumbnail}"/>
+                            <figcaption>
+                                <em th:text= "'Thumbanil for ' + ${book.title}"></em>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <div class="col col-8">
+                        <h3 th:text="${book.title}"></h3>
+                        <p th:text="'Author: ' + ${book.author}"></p>
+                        <p th:text="'Publisher: ' + ${book.publisher}"></p>
+                        <p th:text="'Subject: ' + ${book.subject}"></p>
+                        <p th:text="'Language: ' + ${book.language}"></p>
+                        <p th:text="'Category: ' + ${book.category}"></p>
+                        <p th:text="'Amount: ' + ${book.amount}"></p>
+                        <p th:text="'Price: ' + ${book.price}"></p>
+                        <p th:text="'Borrow Price: '+ ${book.borrowPrice}"></p>
 
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Name:</label>
-                                        <input type="text" class="form-control" th:field="*{name}"
-                                               id="recipient-name">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
 
             </div>
-            <!-- /.container-fluid -->
+
 
         </div>
         <!-- End of Main Content -->
@@ -406,7 +395,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2020</span>
+                    <span>Copyright &copy; Your Website 2021</span>
                 </div>
             </div>
         </footer>
@@ -444,14 +433,21 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="../admin/vendor/jquery/jquery.min.js"></script>
-<script src="../admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/admin/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="../admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script th:src="@{/admin/vendor/jquery-easing/jquery.easing.min.js}"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="../admin/js/sb-admin-2.min.js"></script>
+<script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
+
+<!-- Page level plugins -->
+<script th:src="@{/admin/vendor/chart.js/Chart.min.js}"></script>
+
+<!-- Page level custom scripts -->
+<script th:src="@{/admin/js/demo/chart-area-demo.js}"></script>
+<script th:src="@{/admin/js/demo/chart-pie-demo.js}"></script>
 
 </body>
 
