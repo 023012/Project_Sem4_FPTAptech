@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -43,24 +44,56 @@ public class BookController {
 
 
     //    SaveBook
-    @RequestMapping(value = "/admin/book/new")
+    @GetMapping(value = "/admin/book/new")
     public String addForm(Model model) {
         Book book = new Book();
         List<Category> categories = categoryRepository.findAll();
-        model.addAttribute("book", book);
-        model.addAttribute("status",book.getStatus());
         model.addAttribute("categories",categories);
         model.addAttribute("title", "Add new book");
+        model.addAttribute("book", book);
         return "admin/book-add";
     }
 
     @PostMapping("/admin/books/add")
-    public String  createBook(@Validated  @ModelAttribute("book") Book book,
+    public String  createBook(@ModelAttribute("book") Book book,
                               BindingResult result) {
         if (result.hasErrors()){
-            return "redirect:/book/new";
+            return "redirect:/admin/book/new";
         }
         bookService.createBook(book);
+        return "redirect:/admin/books";
+    }
+
+
+    //    UpdateBookById
+    @GetMapping("/admin/books/edit/{id}")
+    public String updateForm(@PathVariable("id") long id, Model model){
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Book Id: " + id));
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories",categories);
+        model.addAttribute("title","Update book");
+        model.addAttribute("book", book);
+        return "admin/book-edit";
+    }
+
+    @PostMapping("/admin/books/edit/{id}")
+    public String updateBook(@PathVariable("id") long id, @Valid Book book,
+                             BindingResult result){
+        if(result.hasErrors()){
+            book.setId(id);
+            return "/admin/book-edit";
+        }
+        bookService.updateBook(id, book);
+    return "redirect:/admin/books";
+    }
+
+    //    RemoveBookById
+    @GetMapping("/admin/books/delete/{id}")
+    public String deleteBook(@PathVariable Long id, Model model) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
+        bookRepository.delete(book);
         return "redirect:/admin/books";
     }
 
@@ -83,23 +116,6 @@ public class BookController {
         } else {
             return ResponseEntity.ok().body(bookService.getAllBookByCateIDAndKeyword(cateID, keyword));
         }
-    }
-
-
-    //    RemoveBookById
-    @DeleteMapping("/admin/books/delete/{id}")
-    public ResponseEntity<?> deleteBook(@PathVariable Long id) {
-        return ResponseEntity.ok(bookService.deleteBook(id));
-    }
-
-    //    UpdateBookById
-    @PutMapping("/admin/books/save/{id}")
-    public ResponseEntity<Book> updateBook(@RequestParam("categoryId") Long categoryId, @PathVariable Long id,
-                                           @RequestBody Book book) {
-        Category categoryFind = categoryRepository.findById(categoryId).get();
-        book.setCategory(categoryFind);
-        book = bookService.updateBook(id, book);
-        return ResponseEntity.ok(book);
     }
 
 

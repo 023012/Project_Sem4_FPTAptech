@@ -383,7 +383,6 @@
                             <th scope="col">Title</th>
                             <th scope="col">Author</th>
 <!--                            <th scope="col">Publisher</th>-->
-<!--                            <th scope="col">Publisher At</th>-->
 <!--                            <th scope="col">Subject</th>-->
                             <th scope="col">Category</th>
 <!--                            <th scope="col">Language</th>-->
@@ -394,6 +393,7 @@
                             <th scope="col">Status</th>
                             <th scope="col">Created At</th>
                             <th scope="col">Updated At</th>
+                            <th scope="col">Published At</th>
                             <th scope="col">Actions</th>
                         </tr>
                         </thead>
@@ -401,13 +401,16 @@
                         <tr th:each="book : ${books}">
                             <th scope="row" th:text="${book.id}"></th>
                             <td>
-                                <img th:src="${book.thumbnail}" alt="">
+                                <figure>
+                                    <img th:src="${book.thumbnail}"/>
+                                    <figcaption>
+                                        <em th:text= "${book.title}"></em>
+                                    </figcaption>
+                                </figure>
                             </td>
                             <td th:text="${book.title}"></td>
                             <td th:text="${book.author}"></td>
 <!--                            <td th:text="${book.publisher}"></td>-->
-<!--                            <td th:text="${book.getPublishedAt()}"></td>-->
-<!--                            <td th:text="${book.subject}"></td>-->
                             <td th:text="${book.getCategory().name}"></td>
 <!--                            <td th:text="${book.language}"></td>-->
 <!--                            <td th:text="${book.detail}"></td>-->
@@ -417,10 +420,11 @@
                             <td th:text="${book.status}"></td>
                             <td th:text="${book.getCreatedAt()}"></td>
                             <td th:text="${book.getUpdatedAt()}"></td>
+                            <td th:text="${book.getPublishedAt()}"></td>
                             <td>
                                 <a th:href="@{/admin/book/{id}(id = ${book.id})}">Detail</a>
-                                <a th:href="@{/}">Edit</a>
-                                <a th:href="@{/}">Delete</a>
+                                <a th:href="@{/admin/books/edit/{id}(id = ${book.id})}">Edit</a>
+                                <a th:href="@{/admin/books/delete/{id}(id = ${book.id})}">Delete</a>
                             </td>
                         </tr>
                         </tbody>

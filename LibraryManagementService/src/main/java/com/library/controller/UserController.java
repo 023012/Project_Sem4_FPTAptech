@@ -43,48 +43,18 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
 
-//    GetAllUsers
+    //    GetAllUsers
 //    @GetMapping("/users")
 //    public ResponseEntity<List<User>> getUsers(){
 //        return ResponseEntity.ok().body(userService.getUsers());
 //    }
     @GetMapping("users")
-    public String user(Model model){
+    public String user(Model model) {
         List<User> users = userRepository.findAll();
-        model.addAttribute("users",users);
-        model.addAttribute("size",users.size());
-        model.addAttribute("title","Users");
+        model.addAttribute("users", users);
+        model.addAttribute("size", users.size());
+        model.addAttribute("title", "Users");
         return "admin/users/user";
-}
-
-//    GetUserByUsername
-    @GetMapping("/user/username/{username}")
-    public ResponseEntity<?> getUserByUsername(@PathVariable String username){
-        if(userService.getUser(username) == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Username "+username+" is not existed !");
-        }else {
-            return ResponseEntity.ok().body(userService.getUser(username));
-        }
-    }
-
-//    GetUserByEmail
-    @GetMapping("/user/email/{email}")
-    public ResponseEntity<?> getUserByEmail(@PathVariable String email){
-        if(userService.findUserByEmail(email) == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email "+email+" is not existed !");
-        }else {
-            return ResponseEntity.ok().body(userService.findUserByEmail(email));
-        }
-    }
-
-//    GetUserById
-    @GetMapping("/user/{id}")
-    public ResponseEntity<?> getUserByID(@PathVariable Long id){
-        if(userRepository.findById(id) == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with id "+id+" is not existed !");
-        }else {
-            return ResponseEntity.ok().body(userRepository.findById(id));
-        }
     }
 
     @RequestMapping(value = "/user/new")
@@ -94,53 +64,86 @@ public class UserController {
         model.addAttribute("title", "Add new user");
         return "admin/users/user-add";
     }
+
     @PostMapping("user/add")
     public String addUser(@Validated @ModelAttribute("user")
-                              User user, BindingResult result,Model model){
+                          User user, BindingResult result, Model model) {
         User existedUser = userService.findUserByEmail(user.getEmail());
-        if (existedUser != null){
+        if (existedUser != null) {
             log.info("Cannot create this account.\n\tEmail has existed!");
             ResponseEntity.badRequest().body("Cannot create this account.\n\tEmail has existed!");
 
-        }else{
+        } else {
             URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/add").toUriString());
-             ResponseEntity.created(uri).body(userService.saveUser(user));
+            ResponseEntity.created(uri).body(userService.saveUser(user));
         }
 
         return "redirect:/users";
     }
-//    SaveUser
+
+    //    GetUserByUsername
+    @GetMapping("/user/username/{username}")
+    public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
+        if (userService.getUser(username) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Username " + username + " is not existed !");
+        } else {
+            return ResponseEntity.ok().body(userService.getUser(username));
+        }
+    }
+
+    //    GetUserByEmail
+    @GetMapping("/user/email/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+        if (userService.findUserByEmail(email) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email " + email + " is not existed !");
+        } else {
+            return ResponseEntity.ok().body(userService.findUserByEmail(email));
+        }
+    }
+
+    //    GetUserById
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getUserByID(@PathVariable Long id) {
+        if (userRepository.findById(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with id " + id + " is not existed !");
+        } else {
+            return ResponseEntity.ok().body(userRepository.findById(id));
+        }
+    }
+
+
+    //    SaveUser
     @PostMapping("/user/save")
     public ResponseEntity<?> saveUser(@RequestBody User user) {
         //Check if existed user
         User existedUser = userService.findUserByEmail(user.getEmail());
-        if(existedUser != null){
+        if (existedUser != null) {
             log.info("Cannot create this account.\n\tEmail has existed!");
             return ResponseEntity.badRequest().body("Cannot create this account.\n\tEmail has existed!");
-        }else{
+        } else {
             URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
             return ResponseEntity.created(uri).body(userService.saveUser(user));
         }
     }
 
-//    SaveRole
+    //    SaveRole
     @PostMapping("/role/save")
     public ResponseEntity<Role> saveRole(@RequestBody Role role) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveRole(role));
     }
 
-//    RoleAddToUser
+    //    RoleAddToUser
     @PostMapping("/role/add-to-user")
     public String addRoleToUser(@RequestBody RoleToUserModel toUserModel) throws Exception {
         return userService.addRoleToUser(toUserModel.getEmail(), toUserModel.getRoleName());
     }
 
-//
+    //
     @GetMapping("/user/profile")
     public ResponseEntity<?> getProfile(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
@@ -160,7 +163,7 @@ public class UserController {
             }
         } else {
             //throw new RuntimeException("Access token is missing !");
-            return  ResponseEntity.ok().body(new RuntimeException("Access token is missing !"));
+            return ResponseEntity.ok().body(new RuntimeException("Access token is missing !"));
         }
         return ResponseEntity.ok().body("");
     }
@@ -168,7 +171,7 @@ public class UserController {
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
@@ -209,15 +212,15 @@ public class UserController {
         return "redirect:/users";
     }
 
-//    UpdateUser
+    //    UpdateUser
     @PutMapping("/user/update")
-    public ResponseEntity<?> updateUserByAdmin(@RequestParam("userId") Long userId ,
+    public ResponseEntity<?> updateUserByAdmin(@RequestParam("userId") Long userId,
                                                @RequestBody User user) {
         User userExisted = userRepository.findById(userId).get();
-        if(userExisted != null){
+        if (userExisted != null) {
             userExisted = userService.updateUserById(userId, user);
             return ResponseEntity.ok(userExisted);
-        }else{
+        } else {
             return ResponseEntity.badRequest().body("Cannot find User with Id " + userId);
         }
     }
@@ -227,7 +230,7 @@ public class UserController {
                                            HttpServletResponse response,
                                            @RequestBody User userRequest) throws IOException {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
@@ -236,7 +239,7 @@ public class UserController {
                 String username = decodedJWT.getSubject();
                 User user = userService.getUser(username);
 
-                if(user != null){
+                if (user != null) {
                     user.setName(userRequest.getName());
                     user.setUsername(userRequest.getUsername());
                     user.setAvatar(userRequest.getAvatar());
@@ -245,7 +248,7 @@ public class UserController {
                     user.setVirtualWallet(userRequest.getVirtualWallet());
                     userRepository.save(user);
                     return ResponseEntity.ok(user);
-                }else{
+                } else {
                     return ResponseEntity.badRequest().body("Cannot find User with name " + username);
                 }
             } catch (Exception exception) {
@@ -257,23 +260,23 @@ public class UserController {
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
         } else {
-            return  ResponseEntity.ok().body(new RuntimeException("Access token is missing !"));
+            return ResponseEntity.ok().body(new RuntimeException("Access token is missing !"));
         }
         return ResponseEntity.ok().body("");
     }
 
 
-//    UpdateVirtualWallet
+    //    UpdateVirtualWallet
     @PutMapping("/user/update-money")
-    public ResponseEntity<?> updateMoneyUserByAdmin(@RequestParam("userId") Long userId ,
+    public ResponseEntity<?> updateMoneyUserByAdmin(@RequestParam("userId") Long userId,
                                                     @RequestBody User user) {
         User userExisted = userRepository.findById(userId).get();
-        if(userExisted != null){
-            user.setVirtualWallet(userExisted.getVirtualWallet()+ user.getVirtualWallet());
+        if (userExisted != null) {
+            user.setVirtualWallet(userExisted.getVirtualWallet() + user.getVirtualWallet());
             System.out.println(user);
             userExisted = userService.updateUserById(userId, user);
             return ResponseEntity.ok(userExisted);
-        }else{
+        } else {
             return ResponseEntity.badRequest().body("Cannot find User with Id " + userId);
         }
     }

@@ -331,7 +331,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                             <img class="img-profile rounded-circle"
-                                 src="../admin/img/undraw_profile.svg">
+                                 th:src="@{/admin/img/undraw_profile.svg}">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -367,16 +367,10 @@
                 <!-- Page Heading -->
                 <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
 
-                <div th:if="${success}" class="text-center alert alert-success">
-                    <p th:text="${success}"></p>
-                </div>
-                <div th:if="${failed}" class="text-center alert alert-danger">
-                    <p th:text="${failed}"></p>
-                </div>
-
                 <div class="row">
                     <!-- Add Modal: Add new book -->
-                    <form th:action="@{/admin/books/add}" method="post" th:object="${book}" enctype="multipart/form-data">
+                    <form th:action="@{/admin/books/add}" method="post" th:object="${book}">
+
                         <div class="row mb-4">
                             <div class="col">
                                 <div class="form-outline">
@@ -395,23 +389,11 @@
                         </div>
 
                         <!-- Text input -->
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label" for="formPublisher">Publisher</label>
-                                    <input type="text" id="formPublisher" class="form-control" th:field="*{publisher}"/>
-                                </div>
-                            </div>
-                            <span th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></span>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label" for="formPublishedAt">Published At</label>
-                                    <input type="date" id="formPublishedAt" class="form-control"
-                                           th:field="*{publishedAt}"/>
-                                </div>
-                            </div>
-                            <span th:if="${#fields.hasErrors('publishedAt')}" th:errors="*{publishedAt}"></span>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="formPublisher">Publisher</label>
+                            <input type="text" id="formPublisher" class="form-control" th:field="*{publisher}"/>
                         </div>
+                        <span th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></span>
 
                         <!-- Text input -->
                         <div class="row mb-4">
@@ -450,7 +432,6 @@
                             <span th:if="${#fields.hasErrors('borrowPrice')}" th:errors="*{borrowPrice}"></span>
                         </div>
 
-
                         <div class="row mb-4">
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="categories">Category</label>
@@ -479,7 +460,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-outline mb-4">
                             <label for="recipient-avatar" class="col-form-label">Avatar:</label>
                             <input type="file" class="form-control" th:field="*{thumbnail}"
                                    id="recipient-avatar">
@@ -488,13 +469,16 @@
 
 
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="formBookDetail">Book Detail</label>
-                            <textarea class="form-control" id="formBookDetail" rows="4" th:text="*{detail}"></textarea>
+                            <label class="form-label" for="formBookDetail">Description</label>
+                            <textarea type="text" class="form-control" id="formBookDetail" rows="4" th:field="*{description}"></textarea>
                         </div>
-                        <span th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}"></span>
+                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
 
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-block mb-4">Save</button>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                            </button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
                     </form>
                 </div>
 
