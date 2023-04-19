@@ -3,71 +3,69 @@ package com.library.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(	name = "users", 
+		uniqueConstraints = { 
+			@UniqueConstraint(columnNames = "username"),
+			@UniqueConstraint(columnNames = "email") 
+		})
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String name;
+	@NotBlank
+	@Size(max = 50)
+	private String fullName;
 
-    @NonNull
-    @Column(name = "user_name", length = 100)
-    private String username;
+	@NotBlank
+	@Size(max = 20)
+	private String username;
 
-    private String password;
+	@NotBlank
+	@Size(max = 50)
+	@Email
+	private String email;
 
-    @Column(unique = true)
-    private String email;
+	@NotBlank
+	@Size(max = 120)
+	private String password;
 
-    private String phoneNumber;
+	private String phone;
 
-    private String address;
+	private String address;
 
-    private String avatar;
+	private String avatar;
 
-    private int virtualWallet;
+	private int virtualWallet;
 
-    @Enumerated(EnumType.STRING)
-    private AccountStatus status;
+	@Enumerated(EnumType.STRING)
+	private AccountStatus status;
 
-    public enum AccountStatus{
-        ACTIVE ,
-        CLOSED,
-        CANCELED,
-        BLACKLISTED,
-        NONE
-    }
+	public enum AccountStatus{
+		ACTIVE ,
+		CLOSED,
+		CANCELED,
+		BLACKLISTED,
+		NONE
+	}
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "user_roles", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
 
-    public User(String name, @NonNull String username, String password, String email, String phoneNumber, String address, String avatar, int virtualWallet, AccountStatus status, Collection<Role> roles) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.avatar = avatar;
-        this.virtualWallet = virtualWallet;
-        this.status = status;
-        this.roles = roles;
-    }
-
-    /*
-     * FetchType.EAGER: When you load User table from database, it will automatically load Role table as well
-     * FetchType.LAZY : When you load User table from database, it just loads User from DB, you have to call getAllRoles()
-     * from User to get their roles
-     * */
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
 }

@@ -32,6 +32,15 @@ public class BookController {
 
 //    Book Admin Controller
 
+    @GetMapping("/admin/books")
+    public String book(Model model){
+        List<Book> books = bookRepository.findAll();
+        model.addAttribute("books", books);
+        model.addAttribute("size", books.size());
+        model.addAttribute("title", "Books");
+        return "admin/book";
+    }
+
     //    GetBookById(Book details admin)
     @GetMapping("/admin/book/{id}")
     public String getBookById(@PathVariable("id") Long id, Model model) {
@@ -120,6 +129,14 @@ public class BookController {
 
 
     //    Book Controller Client
+
+    @GetMapping("/client/books")
+    public String shop(Model model) {
+        List<Book> books = bookRepository.findAll();
+        model.addAttribute("title", "Books");
+        model.addAttribute("books", books);
+        return "client/book-list";
+    }
 
     @GetMapping("books/book-details/{id}")
     public String bookDetails(@PathVariable("id") Long id, Model model) {

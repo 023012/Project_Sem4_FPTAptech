@@ -37,6 +37,15 @@ public class CategoryController {
 
     //    Backend admin
 
+    @GetMapping("/admin/categories")
+    public String category(Model model){
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
+        model.addAttribute("size", categories.size());
+        model.addAttribute("title", "Categories");
+        return "admin/category";
+    }
+
     @GetMapping("/category/{id}")
     public ResponseEntity<?> getCategoryByID(@PathVariable Long id) {
         if (categoryRepository.findById(id) == null) {
@@ -86,7 +95,7 @@ public class CategoryController {
         return "redirect:/admin/categories";
     }
 
-    @GetMapping("/categories/delete/{id}")
+    @GetMapping("/admin/categories/delete/{id}")
     public String deleteCategory(@PathVariable("id") long id, Model model) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + id));
