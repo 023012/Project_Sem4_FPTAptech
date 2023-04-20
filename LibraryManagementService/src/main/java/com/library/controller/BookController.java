@@ -58,7 +58,7 @@ public class BookController {
     public String  createBook(@Validated  @ModelAttribute("book") Book book,
                               BindingResult result) {
         if (result.hasErrors()){
-            return "redirect:/book/new";
+            return "redirect:/admin/book/new";
         }
         bookService.createBook(book);
         return "redirect:/admin/books";

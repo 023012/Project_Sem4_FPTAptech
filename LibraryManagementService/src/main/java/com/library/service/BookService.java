@@ -20,5 +20,7 @@ public interface BookService {
 
     List<Book> getAllBookByCateIDAndKeyword(Long cateID, String keyword);
 
+    List<Book> getListBook_InOrder(String orderId);
+
 //    List<BookTopSellerDto> getTopSellerOfBook(int topNumber);
 }

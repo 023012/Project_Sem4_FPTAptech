@@ -53,7 +53,7 @@ public class CategoryController {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + id));
         categoryRepository.delete(category);
-        return "redirect:/categories";
+        return "redirect:/admin/categories";
     }
 
     //    Backend admin
@@ -74,7 +74,7 @@ public class CategoryController {
             return "redirect:/category/new";
         }
         categoryService.createCategory(category);
-        return "redirect:/categories";
+        return "redirect:/admin/categories";
     }
 
 
@@ -97,7 +97,7 @@ public class CategoryController {
         }
 
         categoryRepository.save(category);
-        return "redirect:/categories";
+        return "redirect:/admin/categories";
     }
 
 //    update category
