@@ -403,8 +403,8 @@
 <!--                            </td>-->
 <!--                            <td th:text="${user.virtualWallet}"></td>-->
                             <td>
-                                <a class="btn btn-success" th:href="@{/}">Edit</a>
-                                <a class="btn btn-danger" th:href="@{/delete/{id}(id=${user.id})}">Delete</a>
+                                <a class="btn btn-success" th:href="@{/user/edit/{id}(id=${user.id})}">Edit</a>
+                                <a class="btn btn-danger" th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
                             </td>
                         </tr>
                         </tbody>

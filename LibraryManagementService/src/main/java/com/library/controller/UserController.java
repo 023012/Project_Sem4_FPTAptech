@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.entity.Category;
 import com.library.entity.Role;
 import com.library.entity.User;
+import com.library.entity.attachment.model;
 import com.library.model.PasswordModel;
 import com.library.model.RoleToUserModel;
 import com.library.repository.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MimeTypeUtils;
@@ -26,6 +28,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
@@ -39,6 +42,8 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
+
 
     //    GetAllUsers
 //    @GetMapping("/users")
@@ -61,6 +66,43 @@ public class UserController {
         model.addAttribute("title", "Add new user");
         return "admin/users/user-add";
     }
+    @PostMapping("/user/add")
+    public String createUser(@Validated @ModelAttribute("user")
+                                 User user, BindingResult result) {
+        if (result.hasErrors()){
+            return "redirect:/admin/users/user-add";
+        }
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return "redirect:/users";
+    }
+    @GetMapping("/user/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Category Id:" + id));
+
+        model.addAttribute("user", user);
+        return "admin/users/user-edit";
+    }
+    @PostMapping("/user/edit/{id}")
+    public String updateCategory(@PathVariable("id") long id, @Valid User user,
+                                 BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            user.setId(id);
+            return "admin/users/user-edit";
+        }
+//        user.setPassword(encoder.encode(user.getPassword()));
+        userService.update(user);
+        return "redirect:/users";
+    }
+    @GetMapping("/user/delete/{id}")
+    public String deleteUser(@PathVariable("id") long id, Model model) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        userRepository.delete(user);
+        return "redirect:/users";
+    }
+
 
 //    @PostMapping("user/add")
 //    public String addUser(@Validated @ModelAttribute("user")

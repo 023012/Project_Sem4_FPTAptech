@@ -95,7 +95,7 @@ public class CategoryController {
         return "redirect:/admin/categories";
     }
 
-    @GetMapping("/admin/categories/delete/{id}")
+    @PostMapping("/admin/categories/delete/{id}")
     public String deleteCategory(@PathVariable("id") long id, Model model) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + id));
