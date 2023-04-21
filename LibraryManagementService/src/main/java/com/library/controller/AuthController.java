@@ -112,7 +112,9 @@ public class AuthController {
 
 
     @GetMapping("/client")
-    public String clientPage(@RequestParam("token") String token, Model model) {
+    public String clientPage(
+            @RequestParam("token") String token,
+             Model model) {
         UserDetails userDetails = userService.loadUserByUsername(jwtUtils.getUserNameFromJwtToken(token));
         model.addAttribute("user", userDetails.getUsername());
         model.addAttribute("title", "Home Page");
@@ -120,7 +122,9 @@ public class AuthController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(@RequestParam("token") String token, Model model) {
+    public String adminPage(
+            @RequestParam("token") String token,
+            Model model) {
         UserDetails userDetails = userService.loadUserByUsername(jwtUtils.getUserNameFromJwtToken(token));
         model.addAttribute("user", userDetails.getUsername());
         model.addAttribute("title", "Dashboard");

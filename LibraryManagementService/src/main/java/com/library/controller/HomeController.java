@@ -26,11 +26,11 @@ public class HomeController {
     private final UserRepository userRepository;
 
     //    Client User
-//    @RequestMapping("/")
-//    public String home(Model model){
-//        model.addAttribute("title", "Home Page");
-//        return "index";
-//    }
+    @RequestMapping("/index")
+    public String home(Model model){
+        model.addAttribute("title", "Home Page");
+        return "index";
+    }
 
     @GetMapping("/about")
     public String about(){

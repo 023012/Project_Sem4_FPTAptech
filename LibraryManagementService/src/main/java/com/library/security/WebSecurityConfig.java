@@ -97,29 +97,45 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        http.csrf().disable();
-        http.cors().and();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/*").permitAll()
-//                .antMatchers("/admin/*")
-//                .hasAuthority("ADMIN")
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/")
-                .permitAll()
-                .and()
-                .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
-                .and()
-                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
-        http.authenticationProvider(authenticationProvider());
+//        http.csrf().disable();
+//        http.cors().and();
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.authorizeRequests().antMatchers("/*").permitAll()
+////                .antMatchers("/admin/*")
+////                .hasAuthority("ADMIN")
+//                .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .loginProcessingUrl("/login")
+//                .defaultSuccessUrl("/")
+//                .failureUrl("/login?error=true")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .invalidateHttpSession(true)
+//                .clearAuthentication(true)
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                .logoutSuccessUrl("/login?logout")
+//                .permitAll()
+//                .and()
+//                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+http.csrf().disable()
+                .authorizeHttpRequests((authorize) ->authorize.antMatchers("/login", "/logout").permitAll()
+                        .antMatchers("/index").permitAll()
+                        .antMatchers("/admin/**").permitAll()
+                ).formLogin(
+                        form ->form
+                                .loginPage("/login")
+                                .loginProcessingUrl("/login")
+                                .defaultSuccessUrl("/index")
+                                .failureUrl("/login?error")
+                                .permitAll()
+        ).logout(
+                logout ->logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .permitAll()
+        );
+//        http.authenticationProvider(authenticationProvider());
 
         return http.build();
     }
