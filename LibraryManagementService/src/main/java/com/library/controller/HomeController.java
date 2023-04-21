@@ -6,9 +6,7 @@ import com.library.entity.User;
 import com.library.repository.BookRepository;
 import com.library.repository.CategoryRepository;
 
-import com.library.service.BookService;
 import com.library.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +26,7 @@ public class HomeController {
     private final UserRepository userRepository;
 
     //    Client User
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String home(Model model){
         model.addAttribute("title", "Home Page");
         return "index";
@@ -37,14 +35,6 @@ public class HomeController {
     @GetMapping("/about")
     public String about(){
         return "client/about";
-    }
-
-    @GetMapping("/books")
-    public String shop(Model model) {
-        List<Book> books = bookRepository.findAll();
-        model.addAttribute("title", "Books");
-        model.addAttribute("books", books);
-        return "client/book-list";
     }
 
     @GetMapping("/articles")
@@ -56,32 +46,4 @@ public class HomeController {
     public String contactUs(){
         return "client/contact";
     }
-
-
-//    Backend Admin
-    @RequestMapping("/admin")
-    public String dashboard(Model model){
-        model.addAttribute("title", "Das board");
-        return "admin/index";
-    }
-
-    @GetMapping("/admin/categories")
-    public String category(Model model){
-        List<Category> categories = categoryRepository.findAll();
-        model.addAttribute("categories", categories);
-        model.addAttribute("size", categories.size());
-        model.addAttribute("title", "Categories");
-        return "admin/category";
-    }
-
-
-    @GetMapping("/admin/books")
-    public String book(Model model){
-        List<Book> books = bookRepository.findAll();
-        model.addAttribute("books", books);
-        model.addAttribute("size", books.size());
-        model.addAttribute("title", "Books");
-        return "admin/book";
-    }
-
 }

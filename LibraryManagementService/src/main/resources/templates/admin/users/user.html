@@ -67,8 +67,9 @@
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Components:</h6>
-                    <a class="collapse-item" href="user.html">User</a>
-                    <a class="collapse-item active" href="category.html">Category</a>
+                    <a class="collapse-item" th:href="@{/users}">Users</a>
+                    <a class="collapse-item" th:href="@{/admin/categories}">Category</a>
+                    <a class="collapse-item" th:href="@{/admin/books}">Books</a>
                 </div>
             </div>
         </li>
@@ -374,16 +375,15 @@
                     <table class="table table-hover align-middle mb-0 bg-white" th:if="${size > 0}">
                         <thead class="bg-light">
                         <tr>
-                            <th scope="col">User index</th>
+                            <th scope="col">Index</th>
                             <th scope="col">User name</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">FullName</th>
                             <th scope="col">Email</th>
                             <th scope="col">Address</th>
-<!--                            <th scope="col">Password</th>-->
-                            <th scope="col">Phone number</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Avatar</th>
-                            <th scope="col">Virtual wallet</th>
+                            <th scope="col">Phone</th>
+<!--                            <th scope="col">Status</th>-->
+<!--                            <th scope="col">Avatar</th>-->
+<!--                            <th scope="col">Virtual wallet</th>-->
                             <th scope="col">Actions</th>
                         </tr>
                         </thead>
@@ -391,16 +391,17 @@
                         <tr th:each="user : ${users}">
                             <th scope="row" th:text="${user.id}"></th>
                             <td th:text="${user.username}"></td>
-                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.fullName}"></td>
                             <td th:text="${user.email}"></td>
                             <td th:text="${user.address}"></td>
+                            <th th:text="${user.phone}"></th>
 <!--                            <td th:text="${user.password}"></td>-->
-                            <td th:text="${user.phoneNumber}"></td>
-                            <td th:text="${user.status}"></td>
-                            <td>
-                                <img th:src="${user.avatar}">
-                            </td>
-                            <td th:text="${user.virtualWallet}"></td>
+<!--                            <td th:text="${}"></td>-->
+<!--                            <td th:text="${user.status}"></td>-->
+<!--                            <td>-->
+<!--                                <img th:src="${user.avatar}">-->
+<!--                            </td>-->
+<!--                            <td th:text="${user.virtualWallet}"></td>-->
                             <td>
                                 <a class="btn btn-success" th:href="@{/}">Edit</a>
                                 <a class="btn btn-danger" th:href="@{/delete/{id}(id=${user.id})}">Delete</a>

@@ -34,6 +34,18 @@ public class CategoryController {
 //        return categoryService.getAllCategories();
 //    }
 
+
+    //    Backend admin
+
+    @GetMapping("/admin/categories")
+    public String category(Model model){
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
+        model.addAttribute("size", categories.size());
+        model.addAttribute("title", "Categories");
+        return "admin/category";
+    }
+
     @GetMapping("/category/{id}")
     public ResponseEntity<?> getCategoryByID(@PathVariable Long id) {
         if (categoryRepository.findById(id) == null) {
@@ -43,10 +55,6 @@ public class CategoryController {
         }
     }
 
-//    @DeleteMapping("/categories/delete/{id}")
-//    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
-//        return ResponseEntity.ok(categoryService.deleteCategory(id));
-//    }
 
     @GetMapping("/categories/delete/{id}")
     public String deleteCategory(@PathVariable("id") long id, Model model) {
@@ -77,8 +85,6 @@ public class CategoryController {
         return "redirect:/admin/categories";
     }
 
-
-
     @GetMapping("/categories/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Category category = categoryRepository.findById(id)
@@ -100,23 +106,14 @@ public class CategoryController {
         return "redirect:/admin/categories";
     }
 
-//    update category
-//    @PutMapping("/categories/save/{id}")
-//    public String updateCategory(Category category, RedirectAttributes attributes, @PathVariable String id) {
-//        try{
-//            categoryService.createCategory(category);
-//            attributes.addFlashAttribute("success","Updated successfully");
-//        }catch (DataIntegrityViolationException e){
-//            e.printStackTrace();
-//            attributes.addFlashAttribute("failed", "Failed to update because duplicate name");
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            attributes.addFlashAttribute("failed", "Error server");
-//        }
-//        return "redirect:/categories";
-//    }
+    @GetMapping("/admin/categories/delete/{id}")
+    public String deleteCategory(@PathVariable("id") long id, Model model) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + id));
+        categoryRepository.delete(category);
+        return "redirect:/admin/categories";
+    }
 
 
-//    Frontend client
 }
 

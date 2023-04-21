@@ -21,11 +21,10 @@ public class Book {
     @Column(unique = true)
     private String title;
 
-    private String subject;
     private String publisher;
     private String language;
     private String thumbnail;
-    private String detail;
+    private String description;
     private String author;
     private int amount;
     private int price;

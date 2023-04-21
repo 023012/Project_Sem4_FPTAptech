@@ -101,11 +101,10 @@ public class BookServiceImpl implements BookService {
 
         Book bookExisted = bookRepository.findById(id).get();
         bookExisted.setTitle(book.getTitle());
-        bookExisted.setSubject(book.getSubject());
         bookExisted.setPublisher(book.getPublisher());
         bookExisted.setThumbnail(book.getThumbnail());
         bookExisted.setLanguage(book.getLanguage());
-        bookExisted.setDetail(book.getDetail());
+        bookExisted.setDescription(book.getDescription());
         bookExisted.setAuthor(book.getAuthor());
         bookExisted.setAmount(book.getAmount());
         bookExisted.setPrice(book.getPrice());
