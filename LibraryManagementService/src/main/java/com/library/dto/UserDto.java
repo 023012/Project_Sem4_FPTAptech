@@ -15,17 +15,16 @@ import java.util.Set;
 public class UserDto {
     private Long id;
 
-    @Size(min = 3, max = 40, message = "Invalid last name!(3-40 characters)")
-    private String fullName;
+    @Size(min = 3, max = 10, message = "Invalid first name!(3-10 characters)")
+    private String firstName;
+    @Size(min = 3, max = 10, message = "Invalid first name!(3-10 characters)")
+    private String lastName;
 
     @Email
     @NotBlank(message = "Email should not be empty")
     private String email;
 
-    @NotBlank(message = "Username should not be empty")
-    private String username;
-
-    @Size(min = 6, max = 20, message = "Invalid password!(5-15 characters)")
+    @Size(min = 8, max = 16, message = "Invalid password!(8-16 characters)")
     private String password;
 
     private String repeatPassword;

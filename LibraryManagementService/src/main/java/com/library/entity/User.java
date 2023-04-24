@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,59 +14,57 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(	name = "users", 
-		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
-		})
+@Table(	name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email")
+        })
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
 
-	@NotBlank
-	@Size(max = 50)
-	private String fullName;
+    @NotBlank
+    private String firstName;
 
-	@NotBlank
-	@Size(max = 20)
-	private String username;
+    @NotBlank
+    private String lastname;
 
-	@NotBlank
-	@Size(max = 50)
-	@Email
-	private String email;
 
-	@NotBlank
-	@Size(max = 120)
-	private String password;
+    @NotBlank
+    @Email
+    private String email;
 
-	private String phone;
+    @NotBlank
+    private String password;
 
-	private String address;
+    private String phone;
 
-	private String avatar;
+    private String address;
 
-	private int virtualWallet;
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
 
-	@Enumerated(EnumType.STRING)
-	private AccountStatus status;
+    private int virtualWallet;
 
-	public enum AccountStatus{
-		ACTIVE ,
-		CLOSED,
-		CANCELED,
-		BLACKLISTED,
-		NONE
-	}
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status;
+
+    public enum AccountStatus{
+        ACTIVE ,
+        CLOSED,
+        CANCELED,
+        BLACKLISTED,
+        NONE
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
 }

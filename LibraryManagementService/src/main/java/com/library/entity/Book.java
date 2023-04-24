@@ -20,7 +20,7 @@ public class Book {
     @NonNull
     @Column(unique = true)
     private String title;
-
+    private String subject;
     private String publisher;
     private String language;
     private String thumbnail;
@@ -29,7 +29,6 @@ public class Book {
     private int amount;
     private int price;
     private int borrowPrice;
-//    private long category_id;
 
     @Enumerated(EnumType.STRING)
     private BookStatus status;
@@ -37,14 +36,6 @@ public class Book {
     private Date createdAt;
     private Date updatedAt;
     private Date publishedAt;
-
-//    @ManyToOne(
-//            //cascade = CascadeType.
-//    )
-//    @JoinColumn(
-//            name = "category_id", insertable = false, updatable = false
-//    )
-//    private Category category;
 
     @ManyToOne(
             //cascade = CascadeType.
@@ -54,7 +45,8 @@ public class Book {
             referencedColumnName = "categoryId"
     )
     private Category category;
-    public enum BookStatus{
+
+    public enum BookStatus {
         OUT_OF_STOCK,
         AVAILABLE,
         UNAVAILABLE,

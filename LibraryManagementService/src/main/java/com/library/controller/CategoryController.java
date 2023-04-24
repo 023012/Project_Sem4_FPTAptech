@@ -5,7 +5,6 @@ import com.library.repository.CategoryRepository;
 import com.library.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -14,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -75,27 +73,34 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") long id, Model model) {
-        Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid Category Id:" + id));
+    public String showUpdateForm(@PathVariable("id") long category_id, Model model) {
+        Category category = categoryRepository.findById(category_id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Category Id:" + category_id));
 
         model.addAttribute("category", category);
         return "admin/category-edit";
     }
 
     @PostMapping("/categories/edit/{id}")
-    public String updateCategory(@PathVariable("id") long id, @Valid Category category,
+    public String updateCategory(@PathVariable("id") long category_id, @Valid Category category,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
-            category.setCategoryId(id);
+            category.setCategoryId(category_id);
             return "admin/category-edit";
         }
 
-        categoryRepository.save(category);
+        Category existingCategory = categoryRepository.findById(category_id).orElse(null);
+        if (existingCategory == null) {
+            throw new IllegalArgumentException("Invalid Category Id:" + category_id);
+        }
+
+        existingCategory.setName(category.getName());
+        categoryService.updateCategory(existingCategory);
+
         return "redirect:/admin/categories";
     }
 
-    @GetMapping("/admin/categories/delete/{id}")
+    @GetMapping("/categories/delete/{id}")
     public String deleteCategory(@PathVariable("id") long id, Model model) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + id));

@@ -8,16 +8,9 @@ import com.library.repository.RoleRepository;
 import com.library.repository.UserRepository;
 import com.library.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -31,11 +24,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -43,14 +31,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(UserDto userDto) {
         User user = new User();
-        user.setFullName(userDto.getFullName());
-        user.setUsername(userDto.getUsername());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastname(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
+
+        //add role
         Role role = roleRepository.findByName(ERole.ROLE_USER);
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-        user.setRoles(roles);
+        user.setRoles(new HashSet<>(Arrays.asList(role)));
         return userRepository.save(user);
     }
 
@@ -60,22 +48,11 @@ public class UserServiceImpl implements UserService {
         if (existingUser == null) {
             return null;
         }
-        existingUser.setUsername(user.getUsername());
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastname(user.getLastname());
         existingUser.setEmail(user.getEmail());
-        existingUser.setAvatar(user.getAvatar());
+        existingUser.setImage(user.getImage());
         existingUser.setAddress(user.getAddress());
         return userRepository.save(existingUser);
-    }
-
-
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password");
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                new ArrayList<>());
     }
 }

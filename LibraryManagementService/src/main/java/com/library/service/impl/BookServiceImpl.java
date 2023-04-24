@@ -1,41 +1,26 @@
 package com.library.service.impl;
 
 import com.library.entity.Book;
-import com.library.repository.AttachmentRepository;
 import com.library.repository.BookRepository;
-import com.library.service.AttachmentService;
 import com.library.service.BookService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Tuple;
-import javax.swing.text.html.parser.Entity;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
-    private final AttachmentRepository attachmentRepository;
-    private BookRepository bookRepository;
-
-    private AttachmentService attachmentService;
+    private final BookRepository bookRepository;
 
     private EntityManagerFactory emf;
     private Long cateID;
     private String keyword;
-
-    public BookServiceImpl(BookRepository bookRepository , EntityManagerFactory emf,
-                           AttachmentRepository attachmentRepository){
-        this.bookRepository = bookRepository;
-        this.emf = emf;
-
-        this.attachmentRepository = attachmentRepository;
-    }
 
     @Override
     public Book createBook(Book book) {
@@ -97,6 +82,7 @@ public class BookServiceImpl implements BookService {
         Book bookExisted = bookRepository.findById(id).get();
         bookExisted.setTitle(book.getTitle());
         bookExisted.setPublisher(book.getPublisher());
+        bookExisted.setSubject(book.getSubject());
         bookExisted.setThumbnail(book.getThumbnail());
         bookExisted.setLanguage(book.getLanguage());
         bookExisted.setDescription(book.getDescription());

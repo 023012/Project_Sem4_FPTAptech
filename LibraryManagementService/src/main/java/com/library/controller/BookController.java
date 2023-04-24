@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,7 +41,7 @@ public class BookController {
     }
 
     //    GetBookById(Book details admin)
-    @GetMapping("/admin/book/{id}")
+    @GetMapping("/admin/books/{id}")
     public String getBookById(@PathVariable("id") Long id, Model model) {
         Book book = bookRepository.getById(id);
         model.addAttribute("title", "Book Detail");
@@ -53,7 +52,7 @@ public class BookController {
 
 
     //    SaveBook
-    @GetMapping(value = "/admin/book/new")
+    @GetMapping(value = "/admin/books/new")
     public String addForm(Model model) {
         Book book = new Book();
         List<Category> categories = categoryRepository.findAll();
@@ -67,7 +66,7 @@ public class BookController {
     public String  createBook(@ModelAttribute("book") Book book,
                               BindingResult result) {
         if (result.hasErrors()){
-            return "redirect:/admin/book/new";
+            return "admin/book-add";
         }
         bookService.createBook(book);
         return "redirect:/admin/books";
@@ -91,7 +90,7 @@ public class BookController {
                              BindingResult result){
         if(result.hasErrors()){
             book.setId(id);
-            return "/admin/book-edit";
+            return "admin/book-edit";
         }
         bookService.updateBook(id, book);
     return "redirect:/admin/books";
