@@ -137,13 +137,13 @@ public class BookController {
         return "client/book-list";
     }
 
-    @GetMapping("books/book-details/{id}")
+    @GetMapping("/library/books/book-details/{id}")
     public String bookDetails(@PathVariable("id") Long id, Model model) {
         Book book = bookRepository.getById(id);
 //        Long categoryId = book.getCategory().getCategoryId();
         model.addAttribute("title", "Single Book");
         model.addAttribute("book", book);
-        return "client/single-product";
+        return "client/book-single";
     }
 
 }

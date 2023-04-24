@@ -1,16 +1,22 @@
 package com.library.controller;
 
+import com.library.entity.Book;
+import com.library.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("")
 @RequiredArgsConstructor
 public class HomeController {
 
+
+    private final BookRepository bookRepository;
 
     //    Client User
     @RequestMapping("/index")
@@ -27,8 +33,10 @@ public class HomeController {
 
     @GetMapping("/library/books")
     public String allBook(Model model) {
+        List<Book> books = bookRepository.findAll();
         model.addAttribute("title", "Books");
-        return "/client/book-list";
+
+        return "client/book-list";
     }
 
     @GetMapping("/library/articles")

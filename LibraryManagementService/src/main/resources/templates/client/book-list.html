@@ -414,15 +414,15 @@
             <div class="products-grid grid" id="products-grid">
 
                 <figure class="product-style" th:each="book : ${books}">
-                    <a th:href="@{/books/book-details/{id}(id = ${book.id})}">
+                    <a th:href="@{/library/books/book-details/{id}(id = ${book.id})}">
                         <img src="/frontend/images/tab-item1.jpg" alt="Books" class="product-item">
                     </a>
                     <figcaption>
-                        <h3 th:text="${book.getTitle()}"></h3>
-                        <p th:text="${book.getAuthor()}"></p>
+                        <h3 th:text="${book.title}"></h3>
+                        <p th:text="${book.author}"></p>
                         <div class="item-price">
-                            <span class="prev-price" th:text="${book.price} + '₫/Day'"></span>
-                            <span th:text="${book.borrowPrice} + '₫/Day'"></span>
+                            <span class="prev-price" th:text="${book.price} + '₫/1 cuốn'"></span>
+                            <span th:text="${book.borrowPrice} + '₫/ngày'"></span>
                         </div>
                     </figcaption>
                 </figure>
