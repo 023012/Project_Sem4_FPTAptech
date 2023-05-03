@@ -6,8 +6,8 @@
 
 ## Database
 1. User:
-- id: 1, fullName: minh tuan, , username: mTuan113, password: mtnguyenn113, email: mtnguyenn113@gmail.com 
-- id: 2, fullName: thanh dat, username: thdat123, password: 30122002, email: Th.dat1230@gmail.com
+- id: 1, firstName: minh,lastName: tuan , password: mtnguyenn113, email: mtnguyenn113@gmail.com 
+- id: 2, firstName: thanh, lastName: dat, password: 30122002, email: Th.dat1230@gmail.com
 2. Role
 3. Book
 4. Category

@@ -33,11 +33,11 @@ public class AuthController {
 
     @RequestMapping("/index")
     public String home(Model model){
-        model.addAttribute("title","Home Page");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken){
             return "redirect:/login";
         }
+        model.addAttribute("title","Home Page");
         return "index";
     }
 

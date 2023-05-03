@@ -1,13 +1,18 @@
 package com.library.controller;
 
 import com.library.entity.Book;
+import com.library.entity.User;
 import com.library.repository.BookRepository;
+import com.library.repository.UserRepository;
+import com.library.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -18,9 +23,19 @@ public class HomeController {
 
     private final BookRepository bookRepository;
 
+    private final UserRepository userRepository;
+
+    private final UserService userService;
+
     //    Client User
-    @RequestMapping("/index")
-    public String home(Model model) {
+    @RequestMapping(value = {"/index", "/"})
+    public String home(Model model, Principal principal, HttpSession session) {
+        if (principal != null){
+            session.setAttribute("email",principal.getName());
+            User user = userService.findByEmail(principal.getName());
+        }else {
+            session.removeAttribute("email");
+        }
         model.addAttribute("title", "Home Page");
         return "index";
     }
@@ -35,7 +50,7 @@ public class HomeController {
     public String allBook(Model model) {
         List<Book> books = bookRepository.findAll();
         model.addAttribute("title", "Books");
-
+        model.addAttribute("books",books);
         return "client/book-list";
     }
 
@@ -64,5 +79,14 @@ public class HomeController {
     public String adminPage(Model model) {
         model.addAttribute("title", "Dashboard");
         return "/admin/index";
+    }
+
+    @GetMapping("/admin/users")
+    public String user(Model model) {
+        List<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
+        model.addAttribute("size", users.size());
+        model.addAttribute("title", "Users");
+        return "admin/users/user";
     }
 }
