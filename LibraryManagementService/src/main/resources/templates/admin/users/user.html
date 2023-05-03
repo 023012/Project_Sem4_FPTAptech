@@ -8,7 +8,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <div th:replace="/fragments/fragments-be::sidebar"></div>
+    <ul th:replace="/fragments/fragments-be::sidebar"></ul>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -18,61 +18,98 @@
         <div id="content">
 
             <!-- Topbar -->
-            <div th:replace="/fragments/fragments-be::topbar"></div>
+            <nav th:replace="/fragments/fragments-be::topbar"></nav>
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="breadcum-items">
+                                        <span class="item"><a th:href="@{/admin}"
+                                                              href="index.html">Dashboard /</a></span>
+                            <span class="item colored" th:text="${title}"></span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Page Heading -->
                 <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
 
-                <div class="row">
 
-                    <div th:if="${size == 0}">
-                        <p>No category</p>
+                <div class="card shadow mb-4">
+
+                    <div class="card-body">
+                        <div>
+                            <a type="button" class="btn btn-primary mb-3" th:href="@{/admin/users/new}">
+                                Add new user
+                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <div th:if="${size == 0}">
+                                <p>No category</p>
+                            </div>
+                            <table class="table table-bordered" th:if="${size > 0}"
+                                   id="dataTable" width="100%" cellspacing="0">
+                                <thead class="bg-light">
+                                <tr>
+                                    <th class="sorting">Index</th>
+                                    <th class="sorting">Avatar</th>
+                                    <th class="sorting">First Name</th>
+                                    <th class="sorting">Last Name</th>
+                                    <th class="sorting">Email</th>
+                                    <th class="sorting">Address</th>
+                                    <th class="sorting">Phone</th>
+                                    <th class="sorting">Status</th>
+                                    <th class="sorting">Virtual wallet</th>
+                                    <th width="10%">Actions</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Index</th>
+                                    <th>Avatar</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Virtual wallet</th>
+                                    <th width="10%">Actions</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr th:each="user : ${users}">
+                                    <th scope="row" th:text="${user.id}"></th>
+                                    <td>
+                                        <img src="" style="height: 40px; width: 40px;"
+                                             th:src="@{'data:image/*;base64,' + ${user.image}}">
+                                    </td>
+                                    <td th:text="${user.firstName}"></td>
+                                    <td th:text="${user.lastname}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.address}"></td>
+                                    <th th:text="${user.phone}"></th>
+                                    <td th:text="${user.status}"></td>
+                                    <td th:text="${user.virtualWallet}"></td>
+                                    <td>
+                                        <a class="m-1" th:href="@{/}">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                        <a class="m-1" th:href="@{/admin/users/edit/{id}(id = ${user.id})}">
+                                            <i class="fa-solid fa-pen-to-square" style="color: #0b890d;"></i>
+                                        </a>
+                                        <a class="m-1" th:href="@{/admin/users/delete/{id}(id=${user.id})}">
+                                            <i class="fa-solid fa-trash" style="color: #d41111;"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <a type="button" class="btn btn-primary" th:href="@{/user/new}">
-                        Add new user
-                    </a>
-
-                    <table class="table table-hover align-middle mb-0 bg-white" th:if="${size > 0}">
-                        <thead class="bg-light">
-                        <tr>
-                            <th scope="col">Index</th>
-                            <th scope="col">User name</th>
-                            <th scope="col">FullName</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Phone</th>
-                            <!--                            <th scope="col">Status</th>-->
-                            <!--                            <th scope="col">Avatar</th>-->
-                            <!--                            <th scope="col">Virtual wallet</th>-->
-                            <th scope="col">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="user : ${users}">
-                            <th scope="row" th:text="${user.id}"></th>
-                            <td th:text="${user.username}"></td>
-                            <td th:text="${user.fullName}"></td>
-                            <td th:text="${user.email}"></td>
-                            <td th:text="${user.address}"></td>
-                            <th th:text="${user.phone}"></th>
-                            <!--                            <td th:text="${user.password}"></td>-->
-                            <!--                            <td th:text="${}"></td>-->
-                            <!--                            <td th:text="${user.status}"></td>-->
-                            <!--                            <td>-->
-                            <!--                                <img th:src="${user.avatar}">-->
-                            <!--                            </td>-->
-                            <!--                            <td th:text="${user.virtualWallet}"></td>-->
-                            <td>
-                                <a class="btn btn-success" th:href="@{/}">Edit</a>
-                                <a class="btn btn-danger" th:href="@{/delete/{id}(id=${user.id})}">Delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
 
 

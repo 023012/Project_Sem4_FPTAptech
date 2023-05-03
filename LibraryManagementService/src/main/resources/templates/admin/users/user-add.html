@@ -8,7 +8,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <div th:replace="/fragments/fragments-be::sidebar"></div>
+    <ul th:replace="/fragments/fragments-be::sidebar"></ul>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -18,86 +18,99 @@
         <div id="content">
 
             <!-- Topbar -->
-            <div th:replace="/fragments/fragments-be::topbar"></div>
+            <nav th:replace="/fragments/fragments-be::topbar"></nav>
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
-
-                <div th:if="${success}" class="text-center alert alert-success">
-                    <p th:text="${success}"></p>
-                </div>
-                <div th:if="${failed}" class="text-center alert alert-danger">
-                    <p th:text="${failed}"></p>
-                </div>
-
                 <div class="row">
-                    <!-- Add Modal: Add new category -->
-                    <form th:action="@{/user/add}" method="post" th:object="${user}">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="breadcum-items">
+                                        <span class="item"><a th:href="@{/admin/users}"
+                                                              href="index.html">User list /</a></span>
+                            <span class="item colored" th:text="${title}"></span>
+                        </div>
+                    </div>
+                </div>
 
-                                    <div class="form-group">
-                                        <label for="recipient-uname" class="col-form-label">User name:</label>
-                                        <input type="text" class="form-control" th:field="*{username}"
-                                               id="recipient-uname" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Name:</label>
-                                        <input type="text" class="form-control" th:field="*{name}"
-                                               id="recipient-name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-email" class="col-form-label">Email:</label>
-                                        <input type="email" class="form-control" th:field="*{email}"
-                                               id="recipient-email" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-address" class="col-form-label">Address:</label>
-                                        <input type="text" class="form-control" th:field="*{address}"
-                                               id="recipient-address" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-ps" class="col-form-label">Password:</label>
-                                        <input type="password" class="form-control" th:field="*{password}"
-                                               id="recipient-ps" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-pn" class="col-form-label">Phone number:</label>
-                                        <input type="text" class="form-control" th:field="*{phoneNumber}"
-                                               id="recipient-pn" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-status" class="col-form-label">Status:</label>
-                                        <select th:field="*{status}" id="recipient-status" class="form-control" name="status">
-                                            <option th:each="status : ${T(com.library.entity.User.AccountStatus).values()}"
-                                                    th:value="${status}" th:text="${status}"></option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-avatar" class="col-form-label">Avatar:</label>
-                                        <input type="file" class="form-control" th:field="*{avatar}"
-                                               id="recipient-avatar">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-vw" class="col-form-label">Virtual Wallet:</label>
-                                        <input type="text" class="form-control" th:field="*{virtualWallet}"
-                                               id="recipient-vw">
-                                    </div>
+                <div class="card shadow mb-4">
 
+                    <div class="card-body">
+                        <!-- Page Heading -->
+                        <h1 class="h3 mb-4 text-gray-800 text-center" th:text="${title}"></h1>
+
+                        <!-- Add Modal: Add new category -->
+                        <form th:action="@{/admin/users/add}" method="post" th:object="${user}"
+                              enctype="multipart/form-data" class="pl-5 pr-5">
+                            <div class="form-row mb-4">
+                                <div class="col">
+                                    <label for="recipient-uname" class="col-form-label">First name:</label>
+                                    <input type="text" class="form-control" th:field="*{firstName}"
+                                           id="recipient-uname" required>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                <div class="col">
+                                    <label for="recipient-name" class="col-form-label">Last Name:</label>
+                                    <input type="text" class="form-control" th:field="*{lastname}"
+                                           id="recipient-name" required>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="form-row mb-4">
+                                <div class="col">
+                                    <label for="recipient-email" class="col-form-label">Email:</label>
+                                    <input type="email" class="form-control" th:field="*{email}"
+                                           id="recipient-email" required>
+                                </div>
+                                <div class="col">
+                                    <label for="recipient-ps" class="col-form-label">Password:</label>
+                                    <input type="password" class="form-control" th:field="*{password}"
+                                           id="recipient-ps" required>
+                                </div>
+                            </div>
+                            <div class="form-row mb-4">
+                                <div class="col">
+                                    <label for="recipient-address" class="col-form-label">Address:</label>
+                                    <input type="text" class="form-control" th:field="*{address}"
+                                           id="recipient-address" required>
+                                </div>
+
+                                <div class="col">
+                                    <label for="recipient-pn" class="col-form-label">Phone number:</label>
+                                    <input type="text" class="form-control" th:field="*{phone}"
+                                           id="recipient-pn" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row mb-4">
+                                <div class="col">
+                                    <label for="recipient-status" class="col-form-label">Status:</label>
+                                    <select th:field="*{status}" id="recipient-status" class="form-control"
+                                            name="status">
+                                        <option th:each="status : ${T(com.library.entity.User.AccountStatus).values()}"
+                                                th:value="${status}" th:text="${status}"></option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="recipient-vw" class="col-form-label">Virtual Wallet:</label>
+                                    <input type="text" class="form-control" th:field="*{virtualWallet}"
+                                           id="recipient-vw">
+                                </div>
+                            </div>
+
+
+                            <!--                                <div class="form-group">-->
+                            <!--                                    <label for="recipient-avatar" class="col-form-label">Avatar:</label>-->
+                            <!--                                    <input type="file" class="form-control" th:field="*{image}"-->
+                            <!--                                           id="recipient-avatar">-->
+                            <!--                                </div>-->
+
+                            <div class="form-group">
+                                <a type="button" th:href="@{/admin/users}" class="btn btn-secondary" data-dismiss="modal">Close
+                                </a>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
             </div>

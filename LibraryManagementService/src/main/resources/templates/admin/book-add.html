@@ -25,132 +25,149 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
-
                 <div class="row">
-                    <!-- Add Modal: Add new book -->
-                    <form th:action="@{/admin/books/add}" method="post" th:object="${book}">
-
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label" for="form6Example1">Title</label>
-                                    <input type="text" id="form6Example1" class="form-control" th:field="*{title}"/>
-                                </div>
-                            </div>
-                            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label" for="form6Example2">Author</label>
-                                    <input type="text" id="form6Example2" class="form-control" th:field="*{author}"/>
-                                </div>
-                            </div>
-                            <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+                    <div class="col-md-12">
+                        <div class="breadcum-items">
+                                        <span class="item"><a th:href="@{/admin/books}"
+                                                              href="index.html">Book list /</a></span>
+                            <span class="item colored" th:text="${title}"></span>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label" for="formPublisher">Publisher</label>
-                                    <input type="text" id="formPublisher" class="form-control" th:field="*{publisher}"/>
-                                </div>
-                                <span th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></span>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label" for="formSubject">Subject</label>
-                                    <input type="text" id="formSubject" class="form-control" th:field="*{subject}"/>
-                                </div>
-                            </div>
-                            <span th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></span>
-                        </div>
+                <div class="card  shadow mb-4">
+                    <div class="card-body">
 
-                        <!-- Text input -->
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label" for="formLanguage">Language</label>
-                                    <input type="text" id="formLanguage" class="form-control" th:field="*{language}"/>
-                                </div>
-                            </div>
-                            <span th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></span>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label" for="formAmount">Amount</label>
-                                    <input type="number" id="formAmount" class="form-control" th:field="*{amount}"/>
-                                </div>
-                            </div>
-                            <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
-                        </div>
+                        <!-- Page Heading -->
+                        <h1 class="h3 mb-4 text-gray-800 text-center" th:text="${title}"></h1>
 
-                        <!-- Number input -->
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label" for="formPrice">Price</label>
-                                    <input type="text" id="formPrice" class="form-control" th:field="*{price}"/>
+                        <!-- Add Modal: Add new book -->
+                        <form th:action="@{/admin/books/add}" th:object="${book}" method="post"
+                              enctype="multipart/form-data" class="pl-5 pr-5">
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form6Example1">Title</label>
+                                        <input type="text" id="form6Example1" class="form-control" th:field="*{title}"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <label class="form-label" for="formBorrowPrice">Borrow Price</label>
-                                    <input type="text" id="formBorrowPrice" class="form-control"
-                                           th:field="*{borrowPrice}"/>
+                                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form6Example2">Author</label>
+                                        <input type="text" id="form6Example2" class="form-control"
+                                               th:field="*{author}"/>
+                                    </div>
                                 </div>
+                                <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
                             </div>
-                            <span th:if="${#fields.hasErrors('borrowPrice')}" th:errors="*{borrowPrice}"></span>
-                        </div>
 
-                        <div class="row mb-4">
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formPublisher">Publisher</label>
+                                        <input type="text" id="formPublisher" class="form-control"
+                                               th:field="*{publisher}"/>
+                                    </div>
+                                    <span th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></span>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formSubject">Subject</label>
+                                        <input type="text" id="formSubject" class="form-control" th:field="*{subject}"/>
+                                    </div>
+                                </div>
+                                <span th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></span>
+                            </div>
+
+                            <!-- Text input -->
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formLanguage">Language</label>
+                                        <input type="text" id="formLanguage" class="form-control"
+                                               th:field="*{language}"/>
+                                    </div>
+                                </div>
+                                <span th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></span>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formAmount">Amount</label>
+                                        <input type="number" id="formAmount" class="form-control" th:field="*{amount}"/>
+                                    </div>
+                                </div>
+                                <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
+                            </div>
+
+                            <!-- Number input -->
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formPrice">Price</label>
+                                        <input type="text" id="formPrice" class="form-control" th:field="*{price}"/>
+                                    </div>
+                                </div>
+                                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formBorrowPrice">Borrow Price</label>
+                                        <input type="text" id="formBorrowPrice" class="form-control"
+                                               th:field="*{borrowPrice}"/>
+                                    </div>
+                                </div>
+                                <span th:if="${#fields.hasErrors('borrowPrice')}" th:errors="*{borrowPrice}"></span>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <label class="col-md-4 control-label" for="categories">Category</label>
+                                    <div class="col-md-4">
+                                        <select id="categories" th:field="*{category}" name="categories"
+                                                class="form-control" style="width:200px;">
+                                            <option th:value="null">-SELECT-</option>
+                                            <option th:each="category : ${categories}"
+                                                    th:value="${category.categoryId}"
+                                                    th:text="${category.name}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <label for="recipient-status" class="col-md-4 control-label">Status</label>
+                                    <div class="col-md-4">
+                                        <select th:field="*{status}" id="recipient-status" class="form-control"
+                                                style="width:200px;">
+                                            <option th:value="null">-SELECT-</option>
+                                            <option th:each="status : ${T(com.library.entity.Book.BookStatus).values()}"
+                                                    th:value="${status}"
+                                                    th:text="${status.name()}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="form-outline">
+                                    <label for="imageBook" class="col-form-label">Thumbnail Book</label>
+                                    <input type="file" class="form-control-file border" id="imageBook" name="imageBook">
+                                </div>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="formBookDetail">Description</label>
+                                <textarea type="text" class="form-control" id="formBookDetail" rows="4"
+                                          th:field="*{description}"></textarea>
+                            </div>
+                            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="categories">Category</label>
-                                <div class="col-md-4">
-                                    <select id="categories" th:field="*{category}" name="categories"
-                                            class="form-control" style="width:200px;">
-                                        <option th:value="null">-SELECT-</option>
-                                        <option th:each="category : ${categories}"
-                                                th:value="${category.categoryId}"
-                                                th:text="${category.name}">
-                                        </option>
-                                    </select>
-                                </div>
+                                <a type="button" th:href="@{/admin/books}" class="btn btn-secondary" data-dismiss="modal">Close
+                                </a>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
-                            <div class="form-group">
-                                <label for="recipient-status" class="col-md-4 control-label">Status</label>
-                                <div class="col-md-4">
-                                    <select th:field="*{status}" id="recipient-status" class="form-control"
-                                            style="width:200px;">
-                                        <option th:value="null">-SELECT-</option>
-                                        <option th:each="status : ${T(com.library.entity.Book.BookStatus).values()}"
-                                                th:value="${status}"
-                                                th:text="${status.name()}"></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        </form>
+                    </div>
 
-                        <div class="form-outline mb-4">
-                            <label for="recipient-avatar" class="col-form-label">Avatar:</label>
-                            <input type="file" class="form-control" th:field="*{thumbnail}"
-                                   id="recipient-avatar">
-                        </div>
-                        <span th:if="${#fields.hasErrors('thumbnail')}" th:errors="*{thumbnail}"></span>
-
-
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="formBookDetail">Description</label>
-                            <textarea type="text" class="form-control" id="formBookDetail" rows="4" th:field="*{description}"></textarea>
-                        </div>
-                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-
-                        <div class="form-group">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                            </button>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </form>
                 </div>
 
             </div>

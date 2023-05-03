@@ -78,6 +78,7 @@ public class CategoryController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Category Id:" + category_id));
 
         model.addAttribute("category", category);
+        model.addAttribute("title","Edit Category");
         return "admin/category-edit";
     }
 
@@ -107,7 +108,5 @@ public class CategoryController {
         categoryRepository.delete(category);
         return "redirect:/admin/categories";
     }
-
-
 }
 

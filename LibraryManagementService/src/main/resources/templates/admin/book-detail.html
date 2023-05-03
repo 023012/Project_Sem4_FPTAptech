@@ -25,34 +25,46 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
-
                 <div class="row">
-                    <div class="col col-4">
-                        <figure>
-                            <img th:src="${book.thumbnail}"/>
-                            <figcaption>
-                                <em th:text= "'Thumbanil for ' + ${book.title}"></em>
-                            </figcaption>
-                        </figure>
-                    </div>
-                    <div class="col col-8">
-                        <h3 th:text="${book.title}"></h3>
-                        <p th:text="'Author: ' + ${book.author}"></p>
-                        <p th:text="'Publisher: ' + ${book.publisher}"></p>
-                        <p th:text="'Language: ' + ${book.language}"></p>
-                        <p th:text="'Category: ' + ${book.category.name}"></p>
-                        <p th:text="'Amount: ' + ${book.amount}"></p>
-                        <p th:text="'Price: ' + ${book.price}"></p>
-                        <p th:text="'Borrow Price: '+ ${book.borrowPrice}"></p>
+                    <div class="col-md-12">
+                        <div class="breadcum-items">
+                                        <span class="item"><a th:href="@{/admin/books}"
+                                                              href="index.html">Book list /</a></span>
+                            <span class="item colored" th:text="${title}"></span>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <label >Description:</label>
-                    <p th:text="${book.description}"></p>
-                </div>
 
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <!-- Page Heading -->
+                        <h1 class="h3 mb-4 text-gray-900" th:text="${title}"></h1>
+
+                        <div class="row">
+                            <div class="col col-5">
+                                <img
+                                     style="height: 450px; width: 450px;"
+                                     th:src="*{'data:image/*;base64,' + book.image}">
+                            </div>
+                            <div class="col col-7">
+                                <h3 style="color: #0c0c0c" th:text="${book.title}"></h3>
+                                <p th:text="'Author: ' + ${book.author}"></p>
+                                <p th:text="'Publisher: ' + ${book.publisher}"></p>
+                                <p th:text="'Language: ' + ${book.language}"></p>
+                                <p th:text="'Category: ' + ${book.category.name}"></p>
+<!--                                <p th:text="'Amount: ' + ${book.amount}"></p>-->
+                                <p th:text="'Price: ' + ${book.price}"></p>
+                                <p th:text="'Borrow Price: '+ ${book.borrowPrice}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="p-3">
+                                <label class="card-text" style="color: #0c0c0c; font-size: 20px">Description:</label>
+                                <p th:text="${book.description}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 

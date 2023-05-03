@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,7 +31,6 @@ public class BookController {
 
 
 //    Book Admin Controller
-
     @GetMapping("/admin/books")
     public String book(Model model){
         List<Book> books = bookRepository.findAll();
@@ -64,11 +64,12 @@ public class BookController {
 
     @PostMapping("/admin/books/add")
     public String  createBook(@ModelAttribute("book") Book book,
+                              @RequestParam("imageBook") MultipartFile imageBook,
                               BindingResult result) {
         if (result.hasErrors()){
             return "admin/book-add";
         }
-        bookService.createBook(book);
+        bookService.save(imageBook,book);
         return "redirect:/admin/books";
     }
 
@@ -80,19 +81,21 @@ public class BookController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Book Id: " + id));
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories",categories);
-        model.addAttribute("title","Update book");
+        model.addAttribute("title","Edit book");
         model.addAttribute("book", book);
         return "admin/book-edit";
     }
 
     @PostMapping("/admin/books/edit/{id}")
-    public String updateBook(@PathVariable("id") long id, @Valid Book book,
+    public String updateBook(@PathVariable("id") long id,
+                             @Valid @ModelAttribute("book") Book book,
+                             @RequestParam("imageBook") MultipartFile imageBook,
                              BindingResult result){
         if(result.hasErrors()){
             book.setId(id);
             return "admin/book-edit";
         }
-        bookService.updateBook(id, book);
+        bookService.update(imageBook,book);
     return "redirect:/admin/books";
     }
 

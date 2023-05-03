@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(	name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "email")
+                @UniqueConstraint(columnNames = {"email", "image", "phone"})
         })
 @Data
 @NoArgsConstructor
@@ -32,7 +32,6 @@ public class User {
 
     @NotBlank
     private String lastname;
-
 
     @NotBlank
     @Email

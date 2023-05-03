@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -23,7 +24,12 @@ public class Book {
     private String subject;
     private String publisher;
     private String language;
-    private String thumbnail;
+
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
+
+    @Column(length = 500)
     private String description;
     private String author;
     private int amount;

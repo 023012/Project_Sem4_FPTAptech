@@ -7,8 +7,10 @@ import com.library.entity.User;
 import com.library.repository.RoleRepository;
 import com.library.repository.UserRepository;
 import com.library.service.UserService;
+import com.library.utils.ImageUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -18,9 +20,11 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    private final ImageUpload imageUpload;
+
     @Override
     public User findById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id).get();
     }
 
     @Override
@@ -36,6 +40,8 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
 
+        user.setVirtualWallet(50000);
+
         //add role
         Role role = roleRepository.findByName(ERole.ROLE_USER);
         user.setRoles(new HashSet<>(Arrays.asList(role)));
@@ -43,16 +49,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user) {
-        User existingUser = findById(user.getId());
-        if (existingUser == null) {
+    public User update(User user, MultipartFile imageUser) {
+        try{
+            User existingUser = findById(user.getId());
+            if (existingUser == null) {
+                return null;
+            }
+
+            if (imageUser != null && !imageUser.isEmpty()) {
+                if (imageUpload.checkExisted(imageUser) == false){
+                    imageUpload.uploadImage(imageUser);
+                }
+                existingUser.setImage(Base64.getEncoder().encodeToString(imageUser.getBytes()));
+            }
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastname(user.getLastname());
+            existingUser.setEmail(user.getEmail());
+            existingUser.setPhone(user.getPhone());
+            existingUser.setAddress(user.getAddress());
+            existingUser.setVirtualWallet(user.getVirtualWallet());
+            existingUser.setStatus(user.getStatus());
+            return userRepository.save(existingUser);
+        }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastname(user.getLastname());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setImage(user.getImage());
-        existingUser.setAddress(user.getAddress());
-        return userRepository.save(existingUser);
     }
 }

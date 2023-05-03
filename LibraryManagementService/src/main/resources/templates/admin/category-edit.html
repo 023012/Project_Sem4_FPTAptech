@@ -25,31 +25,50 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
-
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="breadcum-items">
+                                        <span class="item"><a th:href="@{/admin/categories}"
+                                                              href="index.html">Category list /</a></span>
+                            <span class="item colored" th:text="${title}"></span>
+                        </div>
+                    </div>
+                </div>
 
-                    <!--Change Name category Modal-->
-                    <form th:action="@{/categories/edit/{id}(id=${category.categoryId})}"
-                          th:object="${category}" method="post">
+                <div class="card shadow mb-4">
 
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="name">Name</label>
-                            <input
-                                    type="text"
-                                    id="name"
-                                    class="form-control"
-                                    th:field="*{name}"
-                                   th:placeholder="${category.name}"/>
+                    <div class="card-body">
+                        <div>
+                            <!-- Page Heading -->
+                            <h1 class="h3 mb-4 text-gray-800 text-center" th:text="${title}"></h1>
                         </div>
 
+                        <div>
+                            <!--Change Name category Modal-->
+                            <form th:action="@{/categories/edit/{id}(id=${category.categoryId})}"
+                                  th:object="${category}" method="post"
+                                  class="pl-5 pr-5">
 
-                        <button type="button" th:href="@{backend}" class="btn btn-secondary" data-dismiss="modal">Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="name">Name</label>
+                                    <input
+                                            type="text"
+                                            id="name"
+                                            class="form-control"
+                                            th:field="*{name}"
+                                            th:placeholder="${category.name}"/>
+                                </div>
 
-                    </form>
+
+                                <div class="form-group">
+                                    <a type="button" th:href="@{/admin/categories}" class="btn btn-secondary" data-dismiss="modal">Close
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.container-fluid -->
