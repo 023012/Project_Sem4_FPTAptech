@@ -50,14 +50,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user, MultipartFile imageUser) {
-        try{
+        try {
             User existingUser = findById(user.getId());
             if (existingUser == null) {
                 return null;
             }
 
             if (imageUser != null && !imageUser.isEmpty()) {
-                if (imageUpload.checkExisted(imageUser) == false){
+                if (imageUpload.checkExisted(imageUser) == false) {
                     imageUpload.uploadImage(imageUser);
                 }
                 existingUser.setImage(Base64.getEncoder().encodeToString(imageUser.getBytes()));
@@ -70,7 +70,32 @@ public class UserServiceImpl implements UserService {
             existingUser.setVirtualWallet(user.getVirtualWallet());
             existingUser.setStatus(user.getStatus());
             return userRepository.save(existingUser);
-        }catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public User saveInfo(User user, MultipartFile imageUser) {
+        try {
+
+            User userInfo = userRepository.findByEmail(user.getEmail());
+
+            userInfo.setFirstName(user.getFirstName());
+            userInfo.setLastname(user.getLastname());
+
+            if (imageUser != null && !imageUser.isEmpty()) {
+                if (imageUpload.checkExisted(imageUser) == false) {
+                    imageUpload.uploadImage(imageUser);
+                }
+                userInfo.setImage(Base64.getEncoder().encodeToString(imageUser.getBytes()));
+            }
+
+            userInfo.setPhone(user.getPhone());
+            userInfo.setAddress(user.getAddress());
+            return userRepository.save(userInfo);
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
