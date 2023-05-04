@@ -11,4 +11,6 @@ public interface UserService {
     User findByEmail(String email);
     User save(UserDto userDto);
     User update(User user, MultipartFile imageUser);
+
+    User saveInfo(User user, MultipartFile imageUser);
 }
