@@ -1,6 +1,7 @@
 package com.library.controller;
 
 import com.library.entity.Book;
+import com.library.entity.Role;
 import com.library.entity.User;
 import com.library.repository.BookRepository;
 import com.library.repository.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("")
@@ -76,7 +78,13 @@ public class HomeController {
 
     //    Backend Admin
     @GetMapping("/admin")
-    public String adminPage(Model model) {
+    public String adminPage(Model model, Principal principal, HttpSession session) {
+        if (principal != null){
+            session.setAttribute("email",principal.getName());
+            User user = userService.findByEmail(principal.getName());
+        }else {
+            session.removeAttribute("email");
+        }
         model.addAttribute("title", "Dashboard");
         return "/admin/index";
     }
