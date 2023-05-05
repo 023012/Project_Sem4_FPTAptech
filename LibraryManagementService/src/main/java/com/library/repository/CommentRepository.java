@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment,Long> {
     @Query(
-            value = "select * from comment c join book b on c.id=b.id",nativeQuery = true
+            value = "select u.first_name, u.lastname, b.title " +
+                    "from comment c " +
+                    "join book b on c.id=b.id" +
+                    "join users u on c.id = u.user_id",nativeQuery = true
     )
-    List<Comment> getBookMostComment();
+    List<Comment> getAllComment();
 }
