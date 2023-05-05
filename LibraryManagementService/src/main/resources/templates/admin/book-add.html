@@ -93,7 +93,7 @@
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" for="formAmount">Amount</label>
-                                        <input type="number" id="formAmount" class="form-control" th:field="*{amount}"/>
+                                        <input type="number" id="formAmount" class="form-control"  th:min="0" th:field="*{amount}"/>
                                     </div>
                                 </div>
                                 <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
@@ -103,15 +103,15 @@
                             <div class="row mb-4">
                                 <div class="col">
                                     <div class="form-outline">
-                                        <label class="form-label" for="formPrice">Price</label>
-                                        <input type="text" id="formPrice" class="form-control" th:field="*{price}"/>
+                                        <label class="form-label" for="formPrice" th:min="0">Price</label>
+                                        <input type="number" th:min="0" id="formPrice" class="form-control" th:field="*{price}"/>
                                     </div>
                                 </div>
                                 <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
                                 <div class="col">
                                     <div class="form-outline">
-                                        <label class="form-label" for="formBorrowPrice">Borrow Price</label>
-                                        <input type="text" id="formBorrowPrice" class="form-control"
+                                        <label class="form-label" for="formBorrowPrice" >Borrow Price</label>
+                                        <input type="number" th:min="0" id="formBorrowPrice" class="form-control"
                                                th:field="*{borrowPrice}"/>
                                     </div>
                                 </div>

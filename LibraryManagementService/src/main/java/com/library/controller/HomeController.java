@@ -18,7 +18,7 @@ import java.util.Set;
 @Controller
 @RequestMapping("")
 @RequiredArgsConstructor
-public class HomeController {
+public class    HomeController {
 
 
     private final BookRepository bookRepository;

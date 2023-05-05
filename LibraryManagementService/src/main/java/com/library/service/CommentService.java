@@ -5,5 +5,5 @@ import com.library.entity.Comment;
 import java.util.List;
 
 public interface CommentService {
-    List<Comment> getBookMostComment();
+    List<Comment> getAllComment();
 }
