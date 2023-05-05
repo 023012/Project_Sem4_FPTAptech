@@ -1,8 +1,6 @@
 package com.library.controller;
 
-import com.library.entity.Book;
-import com.library.entity.Role;
-import com.library.entity.User;
+import com.library.entity.*;
 import com.library.repository.BookRepository;
 import com.library.repository.UserRepository;
 import com.library.service.UserService;
@@ -35,6 +33,8 @@ public class HomeController {
         if (principal != null){
             session.setAttribute("email",principal.getName());
             User user = userService.findByEmail(principal.getName());
+//            Set<Role> role = user.getRoles();
+//            session.setAttribute("role",role);
         }else {
             session.removeAttribute("email");
         }
@@ -69,9 +69,23 @@ public class HomeController {
     }
 
     // Giỏ đựng sách
-    @GetMapping("/library/my-books")
-    public String myBooks(Model model) {
-        model.addAttribute("title", "My Books");
+    @GetMapping("/library/cart")
+    public String cart(Model model, Principal principal, HttpSession session) {
+        if (principal == null){
+            return "redirect:/auth/login";
+        }
+        String email = principal.getName();
+        User user = userService.findByEmail(email);
+        ShoppingCart shoppingCart = user.getShoppingCart();
+        if (shoppingCart == null){
+            model.addAttribute("check", "No item in your cart");
+        }
+        session.setAttribute("totalItems", shoppingCart.getTotalItems());
+        model.addAttribute("depositTotal", shoppingCart.getTotalDeposit());
+        model.addAttribute("rentTotal",shoppingCart.getTotalRent());
+        model.addAttribute("title", "Shopping cart");
+
+        model.addAttribute("shoppingCart", shoppingCart);
         return "client/cart";
     }
 

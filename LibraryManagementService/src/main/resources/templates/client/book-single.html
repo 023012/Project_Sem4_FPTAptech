@@ -31,21 +31,28 @@
 			<div class="row">
 
 				<div class="col-md-6">
-					<a href="#" class="product-image"><img src="/frontend/images/main-banner2.jpg"></a>
+					<figure href="#" class="product-image">
+						<img th:src="@{'data:image/*;base64,' + ${book.image}}" alt="Books" class="product-item">
+					</figure>
 				</div>
 
 				<div class="col-md-6 pl-5">
 					<div class="product-detail">
 						<h1 th:text="${book.title}"></h1>
-						<p th:text="${book.subject}"></p>
-						<p th:text="${book.author}"></p>
+						<h3 th:text="${book.subject}"></h3>
+						<h3 th:text="${book.author}"></h3>
 						<p th:text="${book.description}"></p>
-
 						<div class="item-price">
 							<span class="prev-price" th:text="${book.price} + '₫/Day'"></span>
 							<span th:text="${book.borrowPrice} + '₫/Day'"></span>
 						</div>
-						<button type="submit" name="add-to-cart" value="27545" class="button">Add to cart</button>
+						<p style="color: #0c0c0c"><span th:text="'Còn lại ' + ${book.amount} + ' quyển sách.'" ></span></p>
+						<div class="">
+							<form th:action="@{/library/add-to-cart}" method="post">
+								<input type="hidden" th:name="'id'" th:value="${book.id}"/>
+								<button type="submit">Add to Cart</button>
+							</form>
+						</div>
 
 					</div>
 				</div>

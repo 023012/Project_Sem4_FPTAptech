@@ -16,6 +16,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/frontend/css/vendor.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/frontend/style.css}">
 
+    <!--  fontawesome  -->
+    <script src="https://kit.fontawesome.com/c986b55ed3.js" crossorigin="anonymous"></script>
+
     <!-- script
     ================================================== -->
     <script th:src="@{/frontend/js/modernizr.js}"></script>
@@ -73,6 +76,12 @@
                                                th:href="@{/auth/account}">Profile
                                             </a>
                                         </li>
+                                        <!--                                        <li class="menu-item">-->
+                                        <!--                                            <a class="nav-link"-->
+                                        <!--                                               th:if="${session.role == 'ADMIN' || session.role == 'ROLE_ADMIN'}"-->
+                                        <!--                                               th:href="@{/admin}">Admin-->
+                                        <!--                                            </a>-->
+                                        <!--                                        </li>-->
                                         <li class="menu-item">
                                             <a class="nav-link" th:if="${session.email != null}"
                                                th:href="@{/auth/logout}">Logout
@@ -91,8 +100,8 @@
 
                         </div>
 
-                        <a th:href="@{/library/my-books}" href="#" class="cart for-buy"><i
-                                class="icon icon-clipboard"></i><span>Cart:(0 $)</span></a>
+                        <a th:href="@{/library/cart}" href="#" class="cart for-buy"><i
+                                class="icon icon-clipboard"></i><span>Cart</span></a>
 
                         <div class="action-menu">
 
