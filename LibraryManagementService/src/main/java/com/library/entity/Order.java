@@ -8,14 +8,15 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
     @Id
     //@GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private String orderId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderId;
+    private String orderNumber;
     private String fullName;
 
     private String email;
@@ -24,19 +25,6 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-
-    @Enumerated(EnumType.STRING)
-    private OrderType type;
-
-//    //Paypal get data
-//    @Transient
-//    private String currency;
-//    @Transient
-//    private String method;
-//    @Transient
-//    private String intent;
-//    @Transient
-//    private String description;
 
 
     private int totalDeposit;
@@ -47,7 +35,7 @@ public class Order {
 
 
     @ManyToOne(
-            //cascade = CascadeType.REMOVE
+            cascade = CascadeType.REMOVE
     )
     @JoinColumn(
             name = "user_id",
@@ -65,9 +53,5 @@ public class Order {
         COMPLAINT
     }
 
-    public enum OrderType{
-        PAYPAL,
-        VIRTUAL_WALLET,
-        DIRECTLY
-    }
+
 }
