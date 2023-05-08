@@ -90,6 +90,21 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="accordion-body row">
+                            <form th:action="@{/library/checkout}">
+                                <div class="col-md-4">
+                                    <label for="totalDeposit">Total Deposit:</label>
+                                    <h3 th:text="${depositTotal} + '₫'" id="totalDeposit"></h3>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="totalRent"> Total Rent:</label>
+                                    <h3 th:text="${rentTotal} + '₫'" id="totalRent"></h3>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="button-primary" type="submit" value="Checkout">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

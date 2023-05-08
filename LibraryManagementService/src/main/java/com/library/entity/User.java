@@ -28,7 +28,7 @@ public class User {
     private Long id;
 
     @NotBlank
-    private String firstName;
+    private String firstname;
 
     @NotBlank
     private String lastname;

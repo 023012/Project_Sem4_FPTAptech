@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(UserDto userDto) {
         User user = new User();
-        user.setFirstName(userDto.getFirstName());
+        user.setFirstname(userDto.getFirstName());
         user.setLastname(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
                 }
                 existingUser.setImage(Base64.getEncoder().encodeToString(imageUser.getBytes()));
             }
-            existingUser.setFirstName(user.getFirstName());
+            existingUser.setFirstname(user.getFirstname());
             existingUser.setLastname(user.getLastname());
             existingUser.setEmail(user.getEmail());
             existingUser.setPhone(user.getPhone());
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
             User userInfo = userRepository.findByEmail(user.getEmail());
 
-            userInfo.setFirstName(user.getFirstName());
+            userInfo.setFirstname(user.getFirstname());
             userInfo.setLastname(user.getLastname());
 
             if (imageUser != null && !imageUser.isEmpty()) {

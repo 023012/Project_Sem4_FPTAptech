@@ -81,10 +81,9 @@ public class    HomeController {
             model.addAttribute("check", "No item in your cart");
         }
         session.setAttribute("totalItems", shoppingCart.getTotalItems());
-        model.addAttribute("depositTotal", shoppingCart.getTotalDeposit());
-        model.addAttribute("rentTotal",shoppingCart.getTotalRent());
+        model.addAttribute("depositTotal", shoppingCart.getTotalDeposits());
+        model.addAttribute("rentTotal",shoppingCart.getTotalRents());
         model.addAttribute("title", "Shopping cart");
-
         model.addAttribute("shoppingCart", shoppingCart);
         return "client/cart";
     }

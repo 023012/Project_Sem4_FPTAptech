@@ -69,9 +69,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         int totalRent = totalRent(cart.getCartItem());
         int totalDeposit = totalDeposit(cart.getCartItem());
 
-        cart.setTotalRent(totalRent);
-        cart.setTotalDeposit(totalDeposit);
         cart.setTotalItems(totalItems);
+        cart.setTotalRents(totalRent);
+        cart.setTotalDeposits(totalDeposit);
         cart.setUser(user);
 
         return cartRepository.save(cart);
@@ -94,8 +94,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         int totalDeposit = totalDeposit(cartItems);
 
         cart.setTotalItems(totalItems);
-        cart.setTotalRent(totalRent);
-        cart.setTotalDeposit(totalDeposit);
+        cart.setTotalRents(totalRent);
+        cart.setTotalDeposits(totalDeposit);
 
         return cartRepository.save(cart);
     }
@@ -117,8 +117,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         cart.setCartItem(cartItems);
         cart.setTotalItems(totalItems);
-        cart.setTotalRent(totalRent);
-        cart.setTotalDeposit(totalDeposit);
+        cart.setTotalRents(totalRent);
+        cart.setTotalDeposits(totalDeposit);
 
         return cartRepository.save(cart);
     }
@@ -159,7 +159,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         int totalDeposit = 0;
 
         for(CartItem item : cartItems){
-            totalDeposit += item.getTotalRent();
+            totalDeposit += item.getTotalDeposit();
         }
 
         return totalDeposit;
