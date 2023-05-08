@@ -68,26 +68,11 @@
                   <th class="sorting" width="10%">Actions</th>
                 </tr>
                 </thead>
-                <tfoot  class="bg-light">
-                <tr>
-                  <th>Order Id</th>
-                  <th>Order Number</th>
-                  <th>User Name</th>
-                  <th>Full Name</th>
-                  <th>Email</th>
-                  <th>Phone Number</th>
-                  <th>Address</th>
-                  <th>Status</th>
-                  <th>Total Deposit</th>
-                  <th>Total Rent</th>
-                  <th>Created At</th>
-                  <th>Updated At</th>
-                  <th width="10%">Actions</th>
-                </tr>
-                </tfoot>
+
                 <tbody>
                 <tr th:each="order : ${orders}" style="height: 200px">
                   <th th:text="${order.orderId}"></th>
+                  <td th:text="${order.orderNumber}"></td>
                   <td th:text="${order.getUser().firstName} + ${order.getUser().lastname}"></td>
                   <td th:text="${order.fullName}"></td>
                   <td th:text="${order.email}"></td>
@@ -99,7 +84,7 @@
                   <td th:text="${order.createdAt}"></td>
                   <td th:text="${order.updatedAt}"></td>
                   <td>
-                    <a class="m-1" th:href="@{/admin/orders/details/{id} (id = ${order.orderId})}">
+                    <a class="m-1" th:href="@{/admin/orders/{id} (id = ${order.orderId})}">
                       <i class="fa-solid fa-circle-info"></i>
                     </a>
                     <a class="m-1" th:href="@{/admin/orders/edit/{id} (id = ${order.orderId})}">

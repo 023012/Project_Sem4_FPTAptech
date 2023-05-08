@@ -38,6 +38,8 @@ public class OrderServiceImpl implements OrderService {
 
         order.setStatus(Order.OrderStatus.PENDING);
 
+
+
         return orderRepository.save(order);
     }
 
