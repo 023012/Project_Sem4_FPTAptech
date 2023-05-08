@@ -26,7 +26,6 @@ public class AccountController {
         String email = principal.getName();
         User user = userService.findByEmail(email);
         model.addAttribute("user", user);
-        model.addAttribute("title","Personal Information");
 
         return "/client/user-profile";
     }
@@ -44,7 +43,6 @@ public class AccountController {
         User userInfo = userService.saveInfo(user,imageUser);
 
         redirectAttributes.addFlashAttribute("user", userInfo);
-
         return "redirect:/auth/account";
     }
 }

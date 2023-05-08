@@ -44,13 +44,13 @@
 						<p th:text="${book.description}"></p>
 						<div class="item-price">
 							<span class="prev-price" th:text="${book.price} + '₫/Day'"></span>
-							<span th:text="${book.borrowPrice} + '₫/Day'"></span>
+							<span th:utext="${book.borrowPrice} + '₫/Day'"></span>
 						</div>
 						<p style="color: #0c0c0c"><span th:text="'Còn lại ' + ${book.amount} + ' quyển sách.'" ></span></p>
 						<div class="">
 							<form th:action="@{/library/add-to-cart}" method="post">
 								<input type="hidden" th:name="'id'" th:value="${book.id}"/>
-								<button type="submit">Add to Cart</button>
+								<button type="submit" class="add-to-cart">Add to Cart</button>
 							</form>
 						</div>
 

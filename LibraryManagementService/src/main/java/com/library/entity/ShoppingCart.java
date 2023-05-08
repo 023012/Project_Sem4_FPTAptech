@@ -17,8 +17,8 @@ public class ShoppingCart {
     @Column(name = "shopping_cart_id")
     private Long id;
     private int totalItems;
-    private int totalDeposit;
-    private double  totalRent;
+    private int totalDeposits;
+    private int  totalRents;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;

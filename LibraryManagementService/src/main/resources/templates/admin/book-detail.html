@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.6.0/css/bootstrap.min.css} "/>
+</head>
 <head th:replace="/fragments/fragments-be::head"></head>
 
 <body id="page-top">
@@ -43,8 +46,8 @@
                         <div class="row">
                             <div class="col col-5">
                                 <img
-                                     style="height: 450px; width: 450px;"
-                                     th:src="*{'data:image/*;base64,' + book.image}">
+                                        style="height: 450px; width: 450px;"
+                                        th:src="*{'data:image/*;base64,' + book.image}">
                             </div>
                             <div class="col col-7">
                                 <h3 style="color: #0c0c0c" th:text="${book.title}"></h3>
@@ -52,7 +55,7 @@
                                 <p th:text="'Publisher: ' + ${book.publisher}"></p>
                                 <p th:text="'Language: ' + ${book.language}"></p>
                                 <p th:text="'Category: ' + ${book.category.name}"></p>
-<!--                                <p th:text="'Amount: ' + ${book.amount}"></p>-->
+                                <!--                                <p th:text="'Amount: ' + ${book.amount}"></p>-->
                                 <p th:text="'Price: ' + ${book.price}"></p>
                                 <p th:text="'Borrow Price: '+ ${book.borrowPrice}"></p>
                             </div>
@@ -60,7 +63,7 @@
                         <div class="row">
                             <div class="p-3">
                                 <label class="card-text" style="color: #0c0c0c; font-size: 20px">Description:</label>
-                                <p th:text="${book.description}"></p>
+                                <p th:utext="${book.description}"></p>
                             </div>
                         </div>
                     </div>
