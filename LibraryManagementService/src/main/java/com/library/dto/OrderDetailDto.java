@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetailDto {
-    private String orderId;
+    private Long orderId;
     private String address;
     private String email;
     private String fullName;
@@ -21,7 +21,6 @@ public class OrderDetailDto {
     @Enumerated(EnumType.STRING)
     private Order.OrderStatus status;
     @Enumerated(EnumType.STRING)
-    private Order.OrderType type;
     private int totalDeposit;
     private int totalRent;
     private Date createdAt;
