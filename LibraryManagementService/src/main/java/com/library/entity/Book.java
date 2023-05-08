@@ -29,7 +29,7 @@ public class Book {
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
 
-    @Column(length = 500)
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String author;
     private int amount;
