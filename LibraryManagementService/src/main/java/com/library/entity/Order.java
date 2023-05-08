@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,7 +36,7 @@ public class Order {
 
 
     @ManyToOne(
-            cascade = CascadeType.REMOVE
+//            cascade = CascadeType.REMOVE
     )
     @JoinColumn(
             name = "user_id",

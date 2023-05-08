@@ -99,6 +99,18 @@ public class OrderController {
         return "redirect:/admin/orders";
     }
 
+//    @PostMapping("/admin/orders/add")
+//    public String createOrder(@Valid Order order, BindingResult result, Model model){
+//        if (result.hasErrors()) {
+//            return "admin/orders/order-add";
+//        }
+//        orderService.createOrder(order);
+//        model.addAttribute("orders", orderService.getAllOrders());
+//        return "redirect:/admin/orders";
+//    }
+
+
+
     @GetMapping("/admin/orders/edit/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         Optional<Order> order = orderRepository.findById(id);
