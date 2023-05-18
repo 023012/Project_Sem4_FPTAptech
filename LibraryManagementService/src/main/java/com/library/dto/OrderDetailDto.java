@@ -13,7 +13,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetailDto {
-    private String orderId;
+    private Long orderId;
+    private String orderNumber;
     private String address;
     private String email;
     private String fullName;

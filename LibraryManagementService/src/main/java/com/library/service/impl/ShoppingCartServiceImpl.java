@@ -58,8 +58,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 itemRepository.save(cartItem);
             }else {
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                cartItem.setTotalRent(quantity * book.getBorrowPrice());
-                cartItem.setTotalDeposit(quantity * book.getPrice());
+                cartItem.setTotalRent(cartItem.getQuantity() * book.getBorrowPrice());
+                cartItem.setTotalDeposit(cartItem.getQuantity() * book.getPrice());
                 itemRepository.save(cartItem);
             }
         }

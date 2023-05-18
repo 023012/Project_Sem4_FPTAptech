@@ -53,7 +53,6 @@ public class OrderItem {
         OVERDUE_LIMITED_DATE,// qua han cho phep muon ( qua 30 ngay )
         TORN_OR_LOST, //Rach hoac mat sach
         RETURN_OK, //Tra sach dung han
-
         BUY_SUCCESS
     }
 }

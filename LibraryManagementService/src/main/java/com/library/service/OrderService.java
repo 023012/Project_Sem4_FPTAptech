@@ -9,11 +9,9 @@ public interface OrderService {
     Order createOrder(Order order);
     List<Order> getAllOrders();
     List<Order> getListOrderByUserID(Long userID);
-
-    OrderDetailDto getOrderDetailByUserID(Long userID, String orderId);
-
-    String deleteOrder(String id);
-    Order updateOrder(String id, Order order);
+    OrderDetailDto getOrderDetailByUserID(Long userID, Long orderId);
+    String deleteOrder(Long id);
+    Order updateOrder(Long id, Order order);
 //    List<Order> exportOrderToExcel(HttpServletResponse response) throws IOException;
 //    List<Order> exportSingleOrderToExcel(HttpServletResponse response, List<Order> orderList) throws  IOException;
 //    List<OrderOfUserDto> getListOrderByUserID_InYear(long userID, int year);

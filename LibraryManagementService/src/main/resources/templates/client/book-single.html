@@ -9,140 +9,140 @@
 <div th:replace="/fragments/fragments-fe::headerWrap"></div>
 
 <div class="site-banner">
-	<div class="banner-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="colored">
-						<h1 class="page-title" th:text="${title}"></h1>
-						<div class="breadcum-items">
-							<span class="item"><a th:href="@{/library/books}" href="index.html">Books /</a></span>
-							<span class="item colored" th:text="${title}"></span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="banner-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="colored">
+                        <h1 class="page-title" th:text="${title}"></h1>
+                        <div class="breadcum-items">
+                            <span class="item"><a th:href="@{/library/books}" href="index.html">Books /</a></span>
+                            <span class="item colored" th:text="${title}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-	<section class="bg-sand padding-large">
-		<div class="container">
-			<div class="row">
+<section class="bg-sand padding-large">
+    <div class="container accordion">
+        <div class="row accordion-item">
 
-				<div class="col-md-6">
-					<figure href="#" class="product-image">
-						<img th:src="@{'data:image/*;base64,' + ${book.image}}" alt="Books" class="product-item">
-					</figure>
-				</div>
+            <div class="col-md-6 accordion-body">
+                <figure href="#" class="product-image">
+                    <img th:src="@{'data:image/*;base64,' + ${book.image}}" alt="Books" class="product-item">
+                </figure>
+            </div>
 
-				<div class="col-md-6 pl-5">
-					<div class="product-detail">
-						<h1 th:text="${book.title}"></h1>
-						<h3 th:text="${book.subject}"></h3>
-						<h3 th:text="${book.author}"></h3>
-						<p th:text="${book.description}"></p>
-						<div class="item-price">
-							<span class="prev-price" th:text="${book.price} + '₫/Day'"></span>
-							<span th:utext="${book.borrowPrice} + '₫/Day'"></span>
-						</div>
-						<p style="color: #0c0c0c"><span th:text="'Còn lại ' + ${book.amount} + ' quyển sách.'" ></span></p>
-						<div class="">
-							<form th:action="@{/library/add-to-cart}" method="post">
-								<input type="hidden" th:name="'id'" th:value="${book.id}"/>
-								<button type="submit" class="add-to-cart">Add to Cart</button>
-							</form>
-						</div>
+            <div class="col-md-6 pl-5 accordion-body">
+                <div class="product-detail">
+                    <h1 th:text="${book.title}"></h1>
+                    <h3 th:text="${book.subject}"></h3>
+                    <h3 th:text="${book.author}"></h3>
+                    <p th:utext="${book.description}"></p>
+                    <div class="item-price">
+                        <span class="prev-price" th:text="${book.price} + '₫/Day'"></span>
+                        <span th:utext="${book.borrowPrice} + '₫/Day'"></span>
+                    </div>
+                    <p style="color: #0c0c0c"><span th:text="'Còn lại ' + ${book.amount} + ' quyển sách.'"></span>
+                    </p>
+                    <div class="">
+                        <form th:action="@{/library/add-to-cart}" method="post">
+                            <input type="hidden" th:name="'id'" th:value="${book.id}"/>
+                            <button type="submit" class="add-to-cart">Add to Cart</button>
+                        </form>
+                    </div>
 
-					</div>
-				</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-			</div>
-		</div>
-	</section>
+<section id="special-offer" class="bookshelf">
 
-	<section id="special-offer" class="bookshelf">
+    <div class="section-header align-center">
+        <div class="title">
+            <span>Grab your opportunity</span>
+        </div>
+        <h2 class="section-title">Books with offer</h2>
+    </div>
 
-		<div class="section-header align-center">
-			<div class="title">
-				<span>Grab your opportunity</span>
-			</div>
-			<h2 class="section-title">Books with offer</h2>
-		</div>
+    <div class="container">
+        <div class="row">
+            <div class="inner-content">
+                <div class="product-list" data-aos="fade-up">
+                    <div class="grid product-grid">
+                        <figure class="product-style">
+                            <img src="../client/images/product-item5.jpg" alt="Books" class="product-item">
+                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
+                                    href="book-single.html">Add to Cart</a></button>
+                            <figcaption>
+                                <h3>Simple way of piece life</h3>
+                                <p>Armor Ramsey</p>
+                                <div class="item-price">
+                                    <span class="prev-price">$ 50.00/Day</span>$ 40.00/Day
+                                </div>
+                            </figcaption>
+                        </figure>
 
-		<div class="container">
-			<div class="row">
-				<div class="inner-content">
-					<div class="product-list" data-aos="fade-up">
-						<div class="grid product-grid">
-							<figure class="product-style">
-								<img src="../client/images/product-item5.jpg" alt="Books" class="product-item">
-								<button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
-										href="book-single.html">Add to Cart</a></button>
-								<figcaption>
-									<h3>Simple way of piece life</h3>
-									<p>Armor Ramsey</p>
-									<div class="item-price">
-										<span class="prev-price">$ 50.00/Day</span>$ 40.00/Day
-									</div>
-								</figcaption>
-							</figure>
+                        <figure class="product-style">
+                            <img src="../client/images/product-item6.jpg" alt="Books" class="product-item">
+                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
+                                    href="book-single.html">Add to Cart</a></button>
+                            <figcaption>
+                                <h3>Great travel at desert</h3>
+                                <p>Sanchit Howdy</p>
+                                <div class="item-price">
+                                    <span class="prev-price">$ 30.00/Day</span>$ 38.00/Day
+                                </div>
+                            </figcaption>
+                        </figure>
 
-							<figure class="product-style">
-								<img src="../client/images/product-item6.jpg" alt="Books" class="product-item">
-								<button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
-										href="book-single.html">Add to Cart</a></button>
-								<figcaption>
-									<h3>Great travel at desert</h3>
-									<p>Sanchit Howdy</p>
-									<div class="item-price">
-										<span class="prev-price">$ 30.00/Day</span>$ 38.00/Day
-									</div>
-								</figcaption>
-							</figure>
+                        <figure class="product-style">
+                            <img src="../client/images/product-item7.jpg" alt="Books" class="product-item">
+                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
+                                    href="book-single.html">Add to Cart</a></button>
+                            <figcaption>
+                                <h3>The lady beauty Scarlett</h3>
+                                <p>Arthur Doyle</p>
+                                <div class="item-price">
+                                    <span class="prev-price">$ 35.00/Day</span>$ 45.00/Day
+                                </div>
+                            </figcaption>
+                        </figure>
 
-							<figure class="product-style">
-								<img src="../client/images/product-item7.jpg" alt="Books" class="product-item">
-								<button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
-										href="book-single.html">Add to Cart</a></button>
-								<figcaption>
-									<h3>The lady beauty Scarlett</h3>
-									<p>Arthur Doyle</p>
-									<div class="item-price">
-										<span class="prev-price">$ 35.00/Day</span>$ 45.00/Day
-									</div>
-								</figcaption>
-							</figure>
+                        <figure class="product-style">
+                            <img src="../client/images/product-item8.jpg" alt="Books" class="product-item">
+                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
+                                    href="book-single.html">Add to Cart</a></button>
+                            <figcaption>
+                                <h3>Once upon a time</h3>
+                                <p>Klien Marry</p>
+                                <div class="item-price">
+                                    <span class="prev-price">$ 25.00/Day</span>$ 35.00/Day
+                                </div>
+                            </figcaption>
+                        </figure>
 
-							<figure class="product-style">
-								<img src="../client/images/product-item8.jpg" alt="Books" class="product-item">
-								<button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
-										href="book-single.html">Add to Cart</a></button>
-								<figcaption>
-									<h3>Once upon a time</h3>
-									<p>Klien Marry</p>
-									<div class="item-price">
-										<span class="prev-price">$ 25.00/Day</span>$ 35.00/Day
-									</div>
-								</figcaption>
-							</figure>
-
-							<figure class="product-style">
-								<img src="../client/images/product-item2.jpg" alt="Books" class="product-item">
-								<button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
-										href="book-single.html">Add to Cart</a></button>
-								<figcaption>
-									<h3>Simple way of piece life</h3>
-									<p>Armor Ramsey</p>
-									<div class="item-price">$ 40.00/Day</div>
-								</figcaption>
-							</figure>
-						</div><!--grid-->
-					</div>
-				</div><!--inner-content-->
-			</div>
-		</div>
-	</section>
+                        <figure class="product-style">
+                            <img src="../client/images/product-item2.jpg" alt="Books" class="product-item">
+                            <button type="button" class="add-to-cart" data-product-tile="add-to-cart"><a
+                                    href="book-single.html">Add to Cart</a></button>
+                            <figcaption>
+                                <h3>Simple way of piece life</h3>
+                                <p>Armor Ramsey</p>
+                                <div class="item-price">$ 40.00/Day</div>
+                            </figcaption>
+                        </figure>
+                    </div><!--grid-->
+                </div>
+            </div><!--inner-content-->
+        </div>
+    </div>
+</section>
 
 
 <div th:replace="/fragments/fragments-fe::footer"></div>

@@ -26,6 +26,7 @@ public class AccountController {
         String email = principal.getName();
         User user = userService.findByEmail(email);
         model.addAttribute("user", user);
+        model.addAttribute("title","Profile");
 
         return "/client/user-profile";
     }

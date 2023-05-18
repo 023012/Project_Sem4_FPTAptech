@@ -5,6 +5,7 @@ import com.library.entity.Order;
 import com.library.repository.OrderRepository;
 import com.library.repository.UserRepository;
 import com.library.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.stereotype.Service;
@@ -14,19 +15,16 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-    private UserRepository userRepository;
-
-    public OrderServiceImpl(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
+    private final UserRepository userRepository;
 
     @Override
     public Order createOrder(Order order) {
-        String randomCode = RandomString.make(10);
-        order.setOrderId(randomCode);
+        String randomCode = "ORD" + RandomString.make(10);
+        order.setOrderNumber(randomCode);
 
         Calendar cal = Calendar.getInstance();
         order.setCreatedAt(cal.getTime());
@@ -54,11 +52,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDetailDto getOrderDetailByUserID(Long userID, String orderId){
+    public OrderDetailDto getOrderDetailByUserID(Long userID, Long orderId){
         Order getOrderDetail = orderRepository.getOrderDetailByUserID(userID, orderId);
 
         OrderDetailDto orderDetailDto = new OrderDetailDto();
         orderDetailDto.setOrderId(getOrderDetail.getOrderId());
+        orderDetailDto.setOrderNumber(orderDetailDto.getOrderNumber());
         orderDetailDto.setAddress(getOrderDetail.getAddress());
         orderDetailDto.setEmail(getOrderDetail.getEmail());
         orderDetailDto.setFullName(getOrderDetail.getFullName());
@@ -72,6 +71,41 @@ public class OrderServiceImpl implements OrderService {
 
         return orderDetailDto;
     }
+
+    @Override
+    public String deleteOrder(Long id) {
+        Order order = orderRepository.findById(id).get();
+        if(order == null){
+            return "Cannot find Order " +id;
+        }else{
+            orderRepository.delete(order);
+            return "Order "+id+ " has been deleted !";
+        }
+    }
+
+    @Override
+    public Order updateOrder(Long id, Order order) {
+        Calendar cal = Calendar.getInstance();
+        order.setUpdatedAt(cal.getTime());
+
+        Order orderExisted = orderRepository.findById(id).get();
+//        orderExisted.setOrderId(order.getOrderId());
+        orderExisted.setFullName(order.getFullName());
+        orderExisted.setEmail(order.getEmail());
+        orderExisted.setPhoneNumber(order.getPhoneNumber());
+        orderExisted.setAddress(order.getAddress());
+        orderExisted.setStatus(order.getStatus());
+        orderExisted.setType(order.getType());
+       /* orderExisted.setTotalDeposit(order.getTotalDeposit());
+        orderExisted.setTotalRent(order.getTotalRent());*/
+
+        orderExisted.setUpdatedAt(order.getUpdatedAt());
+
+        orderRepository.save(orderExisted);
+        return orderExisted;
+    }
+
+
 //
 //    @Override
 //    public List<OrderOfUserDto> getListOrderByUserID_InYear(long userID, int year){
@@ -120,38 +154,6 @@ public class OrderServiceImpl implements OrderService {
 //        return getOrderDtos;
 //    }
 
-    @Override
-    public String deleteOrder(String id) {
-        Order order = orderRepository.findById(id).get();
-        if(order == null){
-            return "Cannot find Order " +id;
-        }else{
-            orderRepository.delete(order);
-            return "Order "+id+ " has been deleted !";
-        }
-    }
-
-    @Override
-    public Order updateOrder(String id, Order order) {
-        Calendar cal = Calendar.getInstance();
-        order.setUpdatedAt(cal.getTime());
-
-        Order orderExisted = orderRepository.findById(id).get();
-        orderExisted.setOrderId(order.getOrderId());
-        orderExisted.setFullName(order.getFullName());
-        orderExisted.setEmail(order.getEmail());
-        orderExisted.setPhoneNumber(order.getPhoneNumber());
-        orderExisted.setAddress(order.getAddress());
-        orderExisted.setStatus(order.getStatus());
-        orderExisted.setType(order.getType());
-       /* orderExisted.setTotalDeposit(order.getTotalDeposit());
-        orderExisted.setTotalRent(order.getTotalRent());*/
-
-        orderExisted.setUpdatedAt(order.getUpdatedAt());
-
-        orderRepository.save(orderExisted);
-        return orderExisted;
-    }
 
 //    @Override
 //    public List<Order> exportOrderToExcel(HttpServletResponse response) throws IOException {

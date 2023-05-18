@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface OrderRepository extends JpaRepository<Order, String> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(
             value = "SELECT * FROM orders s where s.user_id = :userId",
             nativeQuery = true
@@ -20,7 +20,7 @@ public interface OrderRepository extends JpaRepository<Order, String> {
                     " and s.order_id = :orderId",
             nativeQuery = true
     )
-    Order getOrderDetailByUserID(Long userId, String orderId);
+    Order getOrderDetailByUserID(Long userId, Long orderId);
 //
 //    @Query(
 //            value = "SELECT p.id, p.name, p.user_name, p.phone_number, p.avatar, p.address, MONTH(c.created_at), " +

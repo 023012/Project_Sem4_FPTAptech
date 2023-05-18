@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/fragments/fragments-be::head"></head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="/fragments/fragments-be::sidebar"></div>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <div th:replace="/fragments/fragments-be::topbar"></div>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="breadcum-items">
+                                        <span class="item"><a th:href="@{/admin/books}"
+                                                              href="index.html">Book list /</a></span>
+                            <span class="item colored" th:text="${title}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <!-- Page Heading -->
+                        <h1 class="h3 mb-4 text-gray-900" th:text="${title}"></h1>
+
+                        <div class="row">
+
+                            <div class="col col-7">
+                                <p th:text="'Order ID: ' + ${order.orderId}"></p>
+                                <p th:text="'Order Number: ' + ${order.orderNumber}"></p>
+                                <p th:text="'Full Name: ' + ${order.fullName}"></p>
+                                <p th:text="'Email: ' + ${order.email}"></p>
+                                <p th:text="'Phone Number: ' + ${order.phoneNumber}"></p>
+                                <p th:text="'Address: '+ ${order.address}"></p>
+                                <p th:text="'Total Rent: ' + ${order.totalRent}"></p>
+                                <p th:text="'Total Deposit: ' + ${order.totalDeposit}"></p>
+                                <p th:text="'Status: ' + ${order.status}"></p>
+                                <p th:text="'Created At: ' + ${order.createdAt}"></p>
+                                <p th:text="'Updated At: '+ ${order.updatedAt}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a type="button" href="/admin/orders">Back to Orders</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <div th:replace="/fragments/fragments-be::footer"></div>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="/fragments/fragments-be::logoutModal"></div>
+<!-- Bootstrap core JavaScript-->
+<div th:replace="/fragments/fragments-be::script"></div>
+
+
+</body>
+
+</html>

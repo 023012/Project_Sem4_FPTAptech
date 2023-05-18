@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/fragments-be::head"></head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <ul th:replace="/fragments/fragments-be::sidebar"></ul>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+      <!-- Topbar -->
+      <nav th:replace="/fragments/fragments-be::topbar"></nav>
+      <!-- End of Topbar -->
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="breadcum-items">
+                                        <span class="item"><a th:href="@{/admin}"
+                                                              href="index.html">Dashboard /</a></span>
+              <span class="item colored" th:text="${title}"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
+
+        <div class="card shadow mb-4">
+
+          <div class="card-body">
+            <div>
+              <a type="button" class="btn btn-primary mb-3" th:href="@{/admin/orders/new}">
+                Add new order
+              </a>
+            </div>
+            <div class="table-responsive">
+              <div th:if="${size == 0}">
+                <p>No Orders</p>
+              </div>
+              <table class="table table-bordered" th:if="${size > 0}"
+                     id="dataTable" width="100%" cellspacing="0">
+                <thead class="bg-light">
+                <tr>
+                  <th class="sorting">Order Id</th>
+                  <th class="sorting">Order Number</th>
+                  <th class="sorting">User Name</th>
+                  <th class="sorting">Full Name</th>
+                  <th class="sorting">Email</th>
+                  <th class="sorting">Phone Number</th>
+                  <th class="sorting">Address</th>
+                  <th class="sorting">Status</th>
+                  <th class="sorting">Total Deposit</th>
+                  <th class="sorting">Total Rent</th>
+                  <th class="sorting">Created At</th>
+                  <th class="sorting">Updated At</th>
+                  <th class="sorting" width="10%">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="order : ${orders}" style="height: 200px">
+                  <th th:text="${order.orderId}"></th>
+                  <td th:text="${order.orderNumber}"></td>
+                  <td th:text="${order.getUser().firstname} + ${order.getUser().lastname}"></td>
+                  <td th:text="${order.fullName}"></td>
+                  <td th:text="${order.email}"></td>
+                  <td th:text="${order.phoneNumber}"></td>
+                  <td th:text="${order.address}"></td>
+                  <td th:text="${order.status}"></td>
+                  <td th:text="${order.totalDeposit}"></td>
+                  <td th:text="${order.totalRent}"></td>
+                  <td th:text="${order.createdAt}"></td>
+                  <td th:text="${order.updatedAt}"></td>
+                  <td>
+                    <a class="m-1" th:href="@{/admin/orders/{id} (id = ${order.orderId})}">
+                      <i class="fa-solid fa-circle-info"></i>
+                    </a>
+                    <a class="m-1" th:href="@{/admin/orders/edit/{id} (id = ${order.orderId})}">
+                      <i class="fa-solid fa-pen-to-square" style="color: #0b890d;"></i>
+                    </a>
+                    <a class="m-1" th:href="@{/admin/delete/{id} (id = ${order.orderId})}">
+                      <i class="fa-solid fa-trash" style="color: #d41111;"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <div th:replace="/fragments/fragments-be::footer"></div>
+    <!-- End of Footer -->
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="/fragments/fragments-be::logoutModal"></div>
+<!-- Bootstrap core JavaScript-->
+<div th:replace="/fragments/fragments-be::script"></div>
+
+</body>
+
+</html>

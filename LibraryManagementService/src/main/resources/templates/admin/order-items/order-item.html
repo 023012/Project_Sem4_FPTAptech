@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/fragments/fragments-be::head"></head>
 
 <body id="page-top">
@@ -37,81 +37,60 @@
                 <!-- Page Heading -->
                 <h1 class="h3 mb-4 text-gray-800" th:text="${title}"></h1>
 
-
                 <div class="card shadow mb-4">
 
                     <div class="card-body">
                         <div>
-                            <a type="button" class="btn btn-primary mb-3" th:href="@{/admin/users/new}">
-                                Add new user
+                            <a type="button" class="btn btn-primary mb-3" th:href="@{/admin/order_items/new}">
+                                Add new order
                             </a>
                         </div>
                         <div class="table-responsive">
                             <div th:if="${size == 0}">
-                                <p>No category</p>
+                                <p>No Orders</p>
                             </div>
                             <table class="table table-bordered" th:if="${size > 0}"
                                    id="dataTable" width="100%" cellspacing="0">
                                 <thead class="bg-light">
                                 <tr>
-                                    <th class="sorting">Index</th>
-                                    <th class="sorting">Avatar</th>
-                                    <th class="sorting">First Name</th>
-                                    <th class="sorting">Last Name</th>
-                                    <th class="sorting">Email</th>
-                                    <th class="sorting">Address</th>
-                                    <th class="sorting">Phone</th>
+                                    <th class="sorting">Order Item Id</th>
+                                    <th class="sorting">Order Id</th>
+                                    <th class="sorting">Book title</th>
+                                    <th class="sorting">Quantity</th>
                                     <th class="sorting">Status</th>
-                                    <th class="sorting">Virtual wallet</th>
-                                    <th width="10%">Actions</th>
+                                    <th class="sorting">BorrowedAt</th>
+                                    <th class="sorting">ReturnedAt</th>
+                                    <th class="sorting" width="10%">Actions</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Index</th>
-                                    <th>Avatar</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Email</th>
-                                    <th>Address</th>
-                                    <th>Phone</th>
-                                    <th>Status</th>
-                                    <th>Virtual wallet</th>
-                                    <th width="10%">Actions</th>
-                                </tr>
-                                </tfoot>
+
                                 <tbody>
-                                <tr th:each="user : ${users}">
-                                    <th scope="row" th:text="${user.id}"></th>
+                                <tr th:each="order_item : ${order_items}" style="height: 200px">
+                                    <th th:text="${order_item.orderItemId}"></th>
+                                    <td th:text="${order_item.getOrder().orderId}"></td>
+                                    <td th:text="${order_item.getBook().title}"></td>
+                                    <td th:text="${order_item.quantity}"></td>
+                                    <td th:text="${order_item.status}"></td>
+                                    <td th:text="${order_item.borrowedAt}"></td>
+                                    <td th:text="${order_item.returnedAt}"></td>
                                     <td>
-                                        <img src="" style="height: 40px; width: 40px;"
-                                             th:src="@{'data:image/*;base64,' + ${user.image}}">
-                                    </td>
-                                    <td th:text="${user.firstname}"></td>
-                                    <td th:text="${user.lastname}"></td>
-                                    <td th:text="${user.email}"></td>
-                                    <td th:text="${user.address}"></td>
-                                    <th th:text="${user.phone}"></th>
-                                    <td th:text="${user.status}"></td>
-                                    <td th:text="${user.virtualWallet}"></td>
-                                    <td>
-                                        <a class="m-1" th:href="@{/}">
+                                        <a class="m-1" th:href="@{/admin/orders/{id} (id = ${order.orderId})}">
                                             <i class="fa-solid fa-circle-info"></i>
                                         </a>
-                                        <a class="m-1" th:href="@{/admin/users/edit/{id}(id = ${user.id})}">
+                                        <a class="m-1" th:href="@{/admin/orders/edit/{id} (id = ${order.orderId})}">
                                             <i class="fa-solid fa-pen-to-square" style="color: #0b890d;"></i>
                                         </a>
-                                        <a class="m-1" th:href="@{/admin/users/delete/{id}(id=${user.id})}">
+                                        <a class="m-1" th:href="@{/admin/delete/{id} (id = ${order.orderId})}">
                                             <i class="fa-solid fa-trash" style="color: #d41111;"></i>
                                         </a>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
-
 
             </div>
             <!-- /.container-fluid -->

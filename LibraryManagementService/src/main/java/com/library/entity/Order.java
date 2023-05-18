@@ -14,8 +14,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class Order {
     @Id
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private String orderId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderId;
+    private String orderNumber;
     private String fullName;
 
     private String email;
